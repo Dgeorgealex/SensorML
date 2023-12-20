@@ -3,7 +3,37 @@ from prophet import Prophet
 from prophet.diagnostics import cross_validation
 from prophet.diagnostics import performance_metrics
 import matplotlib.pyplot as plt
+import seaborn as sns
 from cross_validation import print_cross_validation
+
+
+def print_correlation_matrix(df):
+    # d1 = df.groupby(df['Timestamp'].dt.date).median()
+    # d2 = df.groupby(df['Timestamp'].dt.date).mean()
+    correlation_matrix = df.corr()
+    plt.figure(figsize=(10, 6))
+    sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', linewidths=.5)
+    plt.title('Correlation Matrix')
+    plt.show()
+
+
+def print_variable_distribution(df):
+    numerical_columns = df.columns[1:]
+
+    for column in numerical_columns:
+        plt.figure(figsize=(10, 6))
+
+        # Distribution
+        plt.subplot(1, 2, 1)
+        sns.histplot(df[column], kde=False, bins=50)
+        plt.title(f'Distribution of {column}')
+
+        # Boxplot
+        plt.subplot(1, 2, 2)
+        sns.boxplot(x=df[column])
+        plt.title(f'Boxplot of {column}')
+
+        plt.show()
 
 
 def split_and_truncate(df, start_date, end_date):
@@ -64,9 +94,13 @@ def main():
 
     df['Timestamp'] = pd.to_datetime(df['Timestamp'])
 
+    print_correlation_matrix(df)
+
+    print_variable_distribution(df)
+
     # do_stuff(df)
 
-    print_cross_validation(df)
+    # print_cross_validation(df)
 
 
 if __name__ == "__main__":
