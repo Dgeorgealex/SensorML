@@ -1,4 +1,5 @@
 import pandas as pd
+import calplot
 from prophet import Prophet
 from prophet.diagnostics import cross_validation
 from prophet.diagnostics import performance_metrics
@@ -51,7 +52,7 @@ def split_and_truncate(df, start_date, end_date):
 
 def do_stuff(df):
     start_date = df['Timestamp'].min()
-    end_date = start_date + pd.Timedelta(weeks=1)
+    end_date = start_date + pd.Timedelta(weeks=2)
 
     split_dfs = split_and_truncate(df, start_date, end_date)
 
@@ -88,15 +89,32 @@ def do_stuff(df):
         plt.show()
 
 
+def print_calendar_plot(df):
+    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+    numerical_columns = df.columns[1:]
+    for column in numerical_columns:
+        df_aux = df.groupby(df['Timestamp'].dt.date)[column].mean()
+
+        df_aux.index = pd.to_datetime(df_aux.index)
+
+        calplot.calplot(df_aux, cmap='YlGnBu', colorbar=True, figsize=(10, 6))
+
+        plt.title(f"Calendar heatmap of {column}")
+
+        plt.show()
+
+
 def main():
     df = pd.read_csv('dataset.csv')
     # print(df.head())
 
-    df['Timestamp'] = pd.to_datetime(df['Timestamp'])
+    # df['Timestamp'] = pd.to_datetime(df['Timestamp'])
 
-    print_correlation_matrix(df)
+    # print_correlation_matrix(df)
 
-    print_variable_distribution(df)
+    # print_variable_distribution(df)
+
+    print_calendar_plot(df)
 
     # do_stuff(df)
 
