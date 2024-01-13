@@ -1,0 +1,800 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes/"
+     xml:base="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:tomatoes="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#">
+    <owl:Ontology rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes">
+        <rdfs:comment xml:lang="en">This is an ontology about tomato diseases.</rdfs:comment>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasAbnormalityGroup -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasAbnormalityGroup">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasAtPart -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasAtPart">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PlantPart"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasBorderColor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasBorderColor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasColor -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasColor">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasIntensity -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasIntensity">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasPattern -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasPattern">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Pattern"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasShape -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasShape">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasTexture -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#hasTexture">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#isAtPart -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#isAtPart">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AnatomicalRegion"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PlantPart"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Abnormality -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Abnormality"/>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AnatomicalRegion -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AnatomicalRegion">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PlantPart"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Pattern -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Pattern">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PlantPart -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PlantPart"/>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture -->
+
+    <owl:Class rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture">
+        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Abnormality"/>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AllIntensities -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AllIntensities">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#EarlyBlight -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#EarlyBlight">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight1"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight2"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight3"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Fruit -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Fruit">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PlantPart"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#GrayMold -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#GrayMold">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold1"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold2"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold3"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#LateBlight -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#LateBlight">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight1"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight2"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight3"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight4"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight5"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Leaf -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Leaf">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PlantPart"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#LeafMold -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#LeafMold">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#leafMold1"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#leafMold2"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PowderyMilldew -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PowderyMilldew">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
+        <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#powderMilldew1"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#SevereToFatal -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#SevereToFatal">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Stem -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Stem">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PlantPart"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Strong -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Strong">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#StrongToFatal -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#StrongToFatal">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#WeakToModerate -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#WeakToModerate">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#apicalSuperiorRegion -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#apicalSuperiorRegion">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AnatomicalRegion"/>
+        <tomatoes:isAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Leaf"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#basalToCentralRegion -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#basalToCentralRegion">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AnatomicalRegion"/>
+        <tomatoes:isAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Fruit"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#black -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#black">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Pattern"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#brown -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#brown">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#chalky -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#chalky">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#circular -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#circular">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#damp -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#damp">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#dampAndWrinkled -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#dampAndWrinkled">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkBrown -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkBrown">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkGray -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkGray">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkRedBrown -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkRedBrown">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#dryAndRough -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#dryAndRough">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Leaf"/>
+        <tomatoes:hasBorderColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowGreen"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowGreen"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#WeakToModerate"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#spotted"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#circular"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#damp"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Leaf"/>
+        <tomatoes:hasBorderColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellow"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellow"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#StrongToFatal"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#spotted"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#circular"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#damp"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Stem"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#black"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#StrongToFatal"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#elliptic"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#damp"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#basalToCentralRegion"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkBrown"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#SevereToFatal"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#ringShape"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#dryAndRough"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#elliptic -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#elliptic">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#apicalSuperiorRegion"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#greenGray"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AllIntensities"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#vShape"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#chalky"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Stem"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#greenGray"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AllIntensities"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#elliptic"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#wilted"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Fruit"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#white"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#WeakToModerate"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#spotted"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#ringShape"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#smooth"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#basalToCentralRegion"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkGray"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#StrongToFatal"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#greenBrown -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#greenBrown">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#greenGray -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#greenGray">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#inferiorSide -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#inferiorSide">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AnatomicalRegion"/>
+        <tomatoes:isAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Leaf"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#apicalSuperiorRegion"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lightGreen"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#WeakToModerate"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#damp"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#superiorSide"/>
+        <tomatoes:hasBorderColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lightGreen"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#brown"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#dampAndWrinkled"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight3">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#superiorSide"/>
+        <tomatoes:hasBorderColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#greenBrown"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#purpleBrown"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#SevereToFatal"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#dampAndWrinkled"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight4">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Stem"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkBrown"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#StrongToFatal"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#damp"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight5 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight5">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#basalToCentralRegion"/>
+        <tomatoes:hasBorderColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkRedBrown"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#darkRedBrown"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#SevereToFatal"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#dryAndRough"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#leafMold1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#leafMold1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#superiorSide"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellow"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AllIntensities"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#leafMold2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#leafMold2">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#inferiorSide"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AllIntensities"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lightGreen -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lightGreen">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#powderMilldew1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#powderMilldew1">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AbnormalityGroup"/>
+        <tomatoes:hasAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Leaf"/>
+        <tomatoes:hasColor rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowWhite"/>
+        <tomatoes:hasIntensity rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AllIntensities"/>
+        <tomatoes:hasPattern rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#blotchy"/>
+        <tomatoes:hasShape rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#irregular"/>
+        <tomatoes:hasTexture rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#chalky"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#purpleBrown -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#purpleBrown">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#ringShape -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#ringShape">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#smooth -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#smooth">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#spotted -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#spotted">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Pattern"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#superiorSide -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#superiorSide">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#AnatomicalRegion"/>
+        <tomatoes:isAtPart rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Leaf"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#vShape -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#vShape">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#white -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#white">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#wilted -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#wilted">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellow -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellow">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowBrown -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowBrown">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowGreen -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowGreen">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowWhite -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowWhite">
+        <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.26.2023-07-17T20:34:13Z) https://github.com/owlcs/owlapi -->
+
