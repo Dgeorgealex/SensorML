@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Variable Distributions</title>
+</head>
+<body>
+    {% for column in columns %}
+    <h2>Distribution and Boxplot of {{ column }}</h2>
+    <img src="{{ url_for('variable_distribution', column=column) }}" alt="Distribution of {{ column }}">
+    <br/>
+    {% endfor %}
+</body>
+</html>

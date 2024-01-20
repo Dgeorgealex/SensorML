@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calendar Plots</title>
+</head>
+<body>
+    {% for column in columns %}
+        <h2>Calendar Heatmap of {{ column }}</h2>
+        <img src="{{ url_for('calendar_plot', column=column) }}" alt="Calendar Heatmap of {{ column }}">
+    {% endfor %}
+</body>
+</html>
