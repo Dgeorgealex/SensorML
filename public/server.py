@@ -23,7 +23,11 @@ def index():
 
 @app.route('/correlation_matrix')
 def correlation_matrix():
-    file_path = 'img/correlation_matrix.png'
+    directory = 'img'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    file_path = os.path.join(directory, 'correlation_matrix.png')
     show_correlation_matrix(df, file_path)
     return send_file(file_path, mimetype='image/png')
 
