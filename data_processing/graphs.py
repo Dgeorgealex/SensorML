@@ -9,6 +9,7 @@ import seaborn as sns
 mutex = Lock()  # Only generate one plot at a time
 
 
+# GRAPHS
 def show_correlation_matrix(df, file_path=None):
     with mutex:
         if hasattr(show_correlation_matrix, 'is_generated') and file_path:
@@ -81,3 +82,26 @@ def show_variable_distributions(df, directory=None):
                 plt.close()
             else:
                 plt.show()
+
+
+# PROPHET FORECAST
+def plot_forecast(forecast, actual, column, file_path=None):
+    col = actual[column].rename(columns={'Timestamp': 'ds', column: 'y'})
+
+    with mutex:
+        plt.figure(figsize=(10, 6))
+
+        plt.plot(col['ds'], col['y'], label='Actual')
+        plt.plot(forecast['ds'].tail(48), forecast['yhat'].tail(48), label='Predicted')
+        plt.fill_between(forecast['ds'].tail(48), forecast['yhat_lower'].tail(48), forecast['yhat_upper'].tail(48),
+                         alpha=0.3)
+        plt.title(f"Actual vs Predicted for {column}")
+        plt.xlabel('Date')
+        plt.ylabel('Value')
+        plt.legend()
+
+        if file_path:
+            plt.savefig(file_path)
+            plt.close()
+        else:
+            plt.show()
