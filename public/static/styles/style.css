@@ -1,0 +1,53 @@
+/* Tomato Themed CSS for Data Visualization Dashboard */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff5f5; /* Light red background, reminiscent of tomato flesh */
+    color: #4a4a4a; /* Dark grey for text */
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background-color: #ff6347; /* Tomato red */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+    border-bottom: 5px solid #4a4a4a; /* Dark border for contrast */
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+ul li {
+    background-color: #ffeedd; /* Light tomato color */
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+ul li a {
+    text-decoration: none;
+    color: #ff6347; /* Tomato red for links */
+    font-weight: bold;
+}
+
+ul li a:hover {
+    color: #dc143c; /* Darker red on hover */
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 24px;
+        padding: 15px 0;
+    }
+
+    ul li {
+        margin: 8px;
+    }
+}
