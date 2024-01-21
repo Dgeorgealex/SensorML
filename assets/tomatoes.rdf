@@ -108,6 +108,25 @@
     <!-- 
     ///////////////////////////////////////////////////////////////////////////////////////
     //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#description -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#description">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
     // Classes
     //
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -215,6 +234,7 @@
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight2"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight3"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#earlyBlight4"/>
+        <tomatoes:description>Alternaria solani is a fungal pathogen that produces a disease in tomato and potato plants called early blight. The pathogen produces distinctive bullseye patterned leaf spots and can also cause stem lesions and fruit rot on tomato and tuber blight on potato</tomatoes:description>
     </owl:NamedIndividual>
     
 
@@ -235,6 +255,7 @@
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold2"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold3"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#grayMold4"/>
+        <tomatoes:description>Botrytis cinerea is a necrotrophic fungus that affects many plant species, although its most notable hosts may be wine grapes. In viticulture, it is commonly known as botrytis bunch rot; in horticulture, it is usually called grey mould or gray mold.</tomatoes:description>
     </owl:NamedIndividual>
     
 
@@ -248,6 +269,7 @@
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight3"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight4"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#lateBlight5"/>
+        <tomatoes:description>Phytophthora infestans is an oomycete or water mold, a fungus-like microorganism that causes the serious potato and tomato disease known as late blight or potato blight. Early blight, caused by Alternaria solani, is also often called potato blight</tomatoes:description>
     </owl:NamedIndividual>
     
 
@@ -266,6 +288,7 @@
         <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#leafMold1"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#leafMold2"/>
+        <tomatoes:description>Cladosporium fulvum is an Ascomycete called Passalora fulva, a non-obligate pathogen that causes the disease on tomatoes known as the tomato leaf mold. P. fulva only attacks tomato plants, especially the foliage, and it is a common disease in greenhouses, but can also occur in the field.</tomatoes:description>
     </owl:NamedIndividual>
     
 
@@ -275,6 +298,7 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#PowderyMilldew">
         <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Disease"/>
         <tomatoes:hasAbnormalityGroup rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#powderMilldew1"/>
+        <tomatoes:description>Powdery mildew is a fungal disease that affects a wide range of plants. Powdery mildew diseases are caused by many different species of ascomycete fungi in the order Erysiphales.</tomatoes:description>
     </owl:NamedIndividual>
     
 
