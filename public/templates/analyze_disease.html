@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Properties Form</title>
+</head>
+<body>
+
+<h1>Image Properties Form</h1>
+
+<form action="/disease_information/disease" method="POST">
+    <label for="part">Part:</label>
+    <select id="part" name="part">
+        <option value="" selected>Choose a part</option>
+        <option value="Leaf">Leaf</option>
+        <option value="Stem">Stem</option>
+        <option value="Fruit">Fruit</option>
+    </select>
+    <br>
+
+    <label for="intensity">Intensity:</label>
+    <select id="intensity" name="intensity">
+        <option value="" selected>Choose an intensity</option>
+        <option value="WeakToModerate">WeakToModerate</option>
+        <option value="Strong">Strong</option>
+        <option value="StrongToFatal">StrongToFatal</option>
+        <option value="SevereToFatal">SevereToFatal</option>
+        <option value="AllIntensities">AllIntensities</option>
+    </select>
+    <br>
+
+    <label for="texture">Texture:</label>
+    <select id="texture" name="texture">
+        <option value="" selected>Choose a texture</option>
+        <option value="dampAndWrinkled">DampAndWrinkled</option>
+        <option value="damp">Damp</option>
+        <option value="dryAndRough">DryAndRough</option>
+        <option value="chalky">Chalky</option>
+        <option value="wilted">Wilted</option>
+        <option value="smooth">Smooth</option>
+    </select>
+    <br>
+
+    <label for="color">Color:</label>
+    <select id="color" name="color">
+        <option value="" selected>Choose a color</option>
+        <option value="lightGreen">lightGreen</option>
+        <option value="brown">brown</option>
+        <option value="purpleBrown">purpleBrown</option>
+        <option value="darkBrown">darkBrown</option>
+        <option value="darkRedBrown">darkRedBrown</option>
+        <option value="yellowGreen">yellowGreen</option>
+        <option value="yellow">yellow</option>
+        <option value="black">black</option>
+        <option value="yellowWhite">yellowWhite</option>
+        <option value="greenGrey">greenGrey</option>
+        <option value="white">white</option>
+        <option value="darkGrey">darkGrey</option>
+    </select>
+    <br>
+
+    <label for="pattern">Pattern:</label>
+    <select id="pattern" name="pattern">
+        <option value="" selected>Choose a pattern</option>
+        <option value="blotchy">Blotchy</option>
+        <option value="spotted">Spotted</option>
+    </select>
+    <br>
+
+    <label for="anatomicalRegion">Anatomical Region:</label>
+    <select id="anatomicalRegion" name="anatomicalRegion">
+        <option value="" selected>Choose an anatomical region</option>
+        <option value="basalToCentralRegion">BasalToCentralRegion</option>
+        <option value="apicalSuperiorRegion">ApicalSuperiorRegion</option>
+        <option value="superiorSide">SuperiorSide</option>
+        <option value="inferiorSide">InferiorSide</option>
+    </select>
+    <br>
+
+
+    <label for="shape">Shape:</label>
+    <select id="shape" name="shape">
+        <option value="" selected>Choose a shape</option>
+        <option value="irregular">Irregular</option>
+        <option value="circular">Circular</option>
+        <option value="elliptic">Elliptic</option>
+        <option value="ringShape">RingShape</option>
+        <option value="vShape">VShape</option>
+    </select>
+    <br>
+
+
+    <label for="borderColor">Border Color:</label>
+    <select id="borderColor" name="borderColor">
+        <option value="" selected>Choose a border color</option>
+        <option value="lightGreen">lightGreen</option>
+        <option value="greenBrown">greenBrown</option>
+        <option value="darkRedBrown">darkRedBrown</option>
+        <option value="yellowGreen">yellowGreen</option>
+        <option value="yellow">yellow</option>
+    </select>
+    <br>
+
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>

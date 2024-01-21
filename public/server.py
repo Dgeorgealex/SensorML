@@ -1,13 +1,16 @@
 import os
 
-from flask import Flask, send_file, render_template
+from flask import Flask, send_file, render_template, request
 
 from main import load_dataset
 from data_processing.graphs import show_correlation_matrix, show_variable_distributions, show_calendar_plots
-
+from models.inferencer import make_inference
 app = Flask(__name__)
 
-df = load_dataset('../assets/dataset.csv')
+script_directory = os.path.dirname(os.path.abspath(__file__))
+relative_file_path = '../assets/dataset.csv'
+absolute_file_path = os.path.join(script_directory, relative_file_path)
+df = load_dataset(absolute_file_path)
 
 
 def main():
@@ -75,6 +78,26 @@ def calendar_plot(column):
         return send_file(file_path, mimetype='image/png')
     else:
         return "Image not found", 404
+
+# DISEASE INFORMATION
+
+
+@app.route('/disease_information')
+def show_disease():
+    columns = df.columns[1:]
+    return render_template('analyze_disease.html', columns=columns)
+
+
+@app.route('/disease_information/disease', methods=['POST'])
+def find_disease():
+    columns = df.columns[1:]
+    form_list = ["part", "intensity", "texture", "color", "pattern", "anatomicalRegion", "shape", "borderColor"]
+    parameters = {}
+    for element in form_list:
+        if request.form[element]:
+            parameters[element] = request.form[element]
+    print(make_inference(parameters))
+    return render_template('analyze_disease.html', columns=columns)
 
 
 if __name__ == '__main__':
