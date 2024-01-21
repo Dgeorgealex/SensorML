@@ -1,11 +1,9 @@
-from graphs import show_correlation_matrix, show_variable_distributions, show_calendar_plots
-from propheting import prophet_uni_variable
-from data_processing import load_dataset, split_and_truncate
-from cross_validation import print_cross_validation
+from models.propheting import prophet_uni_variable
+from data_processing.data_processing import load_dataset
 
 
 def main():
-    df = load_dataset('dataset.csv')
+    df = load_dataset('assets/dataset.csv')
 
     # show_correlation_matrix(df)
 

@@ -2,7 +2,7 @@ from prophet import Prophet
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from data_processing import split_and_truncate
+from data_processing.data_processing import split_and_truncate
 
 
 def prophet_uni_variable(df):

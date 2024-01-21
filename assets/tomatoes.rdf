@@ -792,6 +792,27 @@
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#yellowWhite">
         <rdf:type rdf:resource="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
     </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Color"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Intensity"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Pattern"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Shape"/>
+            <rdf:Description rdf:about="http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#Texture"/>
+        </owl:members>
+    </rdf:Description>
 </rdf:RDF>
 
 

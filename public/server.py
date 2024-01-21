@@ -3,11 +3,11 @@ import os
 from flask import Flask, send_file, render_template
 
 from main import load_dataset
-from graphs import show_correlation_matrix, show_variable_distributions, show_calendar_plots
+from data_processing.graphs import show_correlation_matrix, show_variable_distributions, show_calendar_plots
 
 app = Flask(__name__)
 
-df = load_dataset('../dataset.csv')
+df = load_dataset('../assets/dataset.csv')
 
 
 def main():
