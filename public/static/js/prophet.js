@@ -39,5 +39,11 @@ generateButton.addEventListener("click", () => {
     console.log(`Selected Start Date: ${selectedStartDate}`);
     console.log(`Selected End Date: ${selectedEndDate}`);
 
+    const preloader = document.getElementById('preloader');
+    const loaderImage = preloader.querySelector('.loader');
+
+    preloader.style.display = 'flex';
+    loaderImage.style.display = 'block';
+
     window.location.href = `/generate-graph?start=${selectedStartDate}&end=${selectedEndDate}`;
 });

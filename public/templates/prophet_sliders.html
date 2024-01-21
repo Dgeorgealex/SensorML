@@ -5,8 +5,13 @@
     <title>Date Range Selector</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/prophet_slides.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/preloader.css') }}">
 </head>
 <body>
+<div id="preloader">
+    <iframe src="https://giphy.com/embed/4bjIKBOWUnVPICCzJc"
+            width="480" height="360" frameBorder="0" class="loader" allowFullScreen></iframe>
+</div>
 <div>
     <label for="start-date">Start Date:</label>
     <input type="range" id="start-date" name="start-date">
