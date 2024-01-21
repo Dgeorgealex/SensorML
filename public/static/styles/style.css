@@ -51,3 +51,66 @@ ul li a:hover {
         margin: 8px;
     }
 }
+
+div {
+    text-align: center; /* Centering content */
+    margin: 20px 0; /* Spacing around each div */
+}
+
+label {
+    display: block; /* Labels in their own line */
+    margin-bottom: 10px; /* Space below labels */
+    font-size: 18px; /* Larger font size for visibility */
+    color: #ff6347; /* Tomato red for labels */
+}
+
+input[type=range] {
+    width: 60%; /* Large width for the slider */
+    margin: 0 auto; /* Centering slider */
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px; /* Larger thumb for slider */
+    height: 25px;
+    background: #ff6347; /* Tomato red thumb */
+    cursor: pointer; /* Cursor indicates it's draggable */
+    border-radius: 50%; /* Circular thumb */
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 25px; /* Larger thumb for slider */
+    height: 25px;
+    background: #ff6347; /* Tomato red thumb */
+    cursor: pointer; /* Cursor indicates it's draggable */
+    border-radius: 50%; /* Circular thumb */
+}
+
+span {
+    color: #ff6347; /* Tomato red for span values */
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+button {
+    background-color: #ff6347; /* Tomato red for button */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #dc143c; /* Darker red on hover */
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 600px) {
+    input[type=range] {
+        width: 80%; /* Larger width for smaller screens */
+    }
+}
