@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Date Range Selector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+</head>
+<body>
+<div>
+    <label for="start-date">Start Date:</label>
+    <input type="range" id="start-date" name="start-date">
+    <span id="start-value">0</span>
+</div>
+<div>
+    <label for="end-date">End Date:</label>
+    <input type="range" id="end-date" name="end-date">
+    <span id="end-value">0</span>
+</div>
+<button id="generate">Generate</button>
+
+<script src="../static/js/prophet.js"></script>
+</body>
+</html>

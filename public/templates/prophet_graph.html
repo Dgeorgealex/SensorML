@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prophet Graph</title>
+</head>
+<body>
+{% for column in columns %}
+<h2>Prophet Prediction of {{ column }}</h2>
+<img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date) }}"
+     alt="Prophet Prediction of {{ column }}">
+{% endfor %}
+
+<!--<h1>Loading Graph...</h1>
+<div id="graph-container" style="display:none;">
+    <img id="graph-image" src="" alt="Graph">
+</div>
+<script src="../static/js/prophet_graph.js"></script>-->
+</body>
+</html>

@@ -1,8 +1,10 @@
+import os
 from prophet import Prophet
 import pandas as pd
 import matplotlib.pyplot as plt
 
 from data_processing.data_processing import split_and_truncate, truncate
+from data_processing.graphs import plot_forecast
 
 
 def print_column_forcast(forecast, column):
@@ -10,26 +12,7 @@ def print_column_forcast(forecast, column):
     print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(48))
 
 
-def plot_forecast(forecast, actual, column):
-    plt.figure(figsize=(10, 6))
-
-    col = actual[column].rename(columns={'Timestamp': 'ds', column: 'y'})
-
-    plt.plot(col['ds'], col['y'], label='Actual')
-    plt.plot(forecast['ds'].tail(48), forecast['yhat'].tail(48), label='Predicted')
-    plt.fill_between(forecast['ds'].tail(48), forecast['yhat_lower'].tail(48), forecast['yhat_upper'].tail(48),
-                     alpha=0.3)
-    plt.title(f"Actual vs Predicted for {column}")
-    plt.xlabel('Date')
-    plt.ylabel('Value')
-    plt.legend()
-    plt.show()
-
-
-def prophet_uni_variable(df):
-    start_date = df['Timestamp'].min()
-    end_date = start_date + pd.Timedelta(weeks=2)
-
+def prophet_uni_variable(df, start_date, end_date):
     split_dfs = split_and_truncate(df, start_date, end_date)
 
     actual = split_and_truncate(df, end_date, end_date + pd.Timedelta(days=2))
@@ -37,9 +20,6 @@ def prophet_uni_variable(df):
         data.rename(columns={'Timestamp': 'ds', column: 'y'})
 
     for column, data in split_dfs.items():
-        print(column)
-        print(data)
-
         m = Prophet()
         m.fit(data.rename(columns={'Timestamp': 'ds', column: 'y'}))
 
@@ -47,13 +27,17 @@ def prophet_uni_variable(df):
 
         forecast = m.predict(future)
 
-        print_column_forcast(forecast, column)
+        # print_column_forcast(forecast, column)
         plot_forecast(forecast, actual, column)
 
 
-def prophet_uni_regressor(df):
-    start_date = df['Timestamp'].min()
-    end_date = start_date + pd.Timedelta(weeks=2)
+def prophet_uni_regressor(df, start_date, end_date, directory=None):
+    # start_date = df['Timestamp'].min()
+    # end_date = start_date + pd.Timedelta(weeks=2)
+    # If start_date is not a pd timestamp, make it one
+    if not isinstance(start_date, pd.Timestamp):
+        start_date = pd.Timestamp(start_date)
+        end_date = pd.Timestamp(end_date)
 
     data = truncate(df, start_date, end_date)
 
@@ -74,5 +58,6 @@ def prophet_uni_regressor(df):
                 future[column2] = df[column2]
         forecast = model.predict(future)
 
-        print_column_forcast(forecast, column)
-        plot_forecast(forecast, actual, column)
+        # print_column_forcast(forecast, column)
+        file_path = os.path.join(directory, f'{column}.png')
+        plot_forecast(forecast, actual, column, file_path)

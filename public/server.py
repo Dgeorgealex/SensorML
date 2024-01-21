@@ -1,15 +1,19 @@
 import os
+from datetime import datetime
 
 from flask import Flask, send_file, render_template, request
 
 from main import load_dataset
-from data_processing.graphs import show_correlation_matrix, show_variable_distributions, show_calendar_plots
 from models.inferencer import make_inference
+from data_processing.graphs import (show_correlation_matrix, show_variable_distributions,
+                                    show_calendar_plots)
+from models.propheting import prophet_uni_regressor
+
 app = Flask(__name__)
 
 script_directory = os.path.dirname(os.path.abspath(__file__))
 os.chdir(script_directory)
-relative_file_path = '../assets/dataset.csv'
+relative_file_path = '../assets/SensorMLDataset.csv'
 absolute_file_path = os.path.join(script_directory, relative_file_path)
 df = load_dataset(absolute_file_path)
 
@@ -79,6 +83,44 @@ def calendar_plot(column):
         return send_file(file_path, mimetype='image/png')
     else:
         return "Image not found", 404
+
+
+# PROPHET PLOTS
+
+@app.route('/prophet-sliders')
+def prophet_sliders():
+    return render_template('prophet_sliders.html')
+
+
+@app.route('/generate-graph')
+def prophet_image():
+    start_date = request.args.get('start')
+    end_date = request.args.get('end')
+
+    start_date_dir = datetime.strptime(start_date, '%m/%d/%Y').strftime('%Y%m%d')
+    end_date_dir = datetime.strptime(end_date, '%m/%d/%Y').strftime('%Y%m%d')
+
+    directory = os.path.join(script_directory, 'prophet_images')
+    subdirectory = os.path.join(directory, start_date_dir + end_date_dir)
+    if not os.path.exists(subdirectory):
+        os.makedirs(subdirectory)
+
+    prophet_uni_regressor(df, start_date, end_date, subdirectory)
+
+    return render_template('prophet_graph.html', columns=df.columns[1:],
+                           start_date=start_date_dir, end_date=end_date_dir)
+
+
+@app.route('/prophet_images/<column>/<start_date>/<end_date>')
+def prophet_images(column, start_date, end_date):
+    directory = os.path.join(script_directory, 'prophet_images')
+    subdirectory = os.path.join(directory, start_date + end_date)
+
+    file_path = os.path.join(subdirectory, f'{column}.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    return "Image not found", 404
+
 
 # DISEASE INFORMATION
 
