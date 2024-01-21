@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diseases</title>
+    <link href="../static/styles/diseases.css" rel="stylesheet">
+</head>
+<body>
+    {% for disease in diseases %}
+        <h2>Your tomato may suffer from {{ disease[0] }}</h2>
+        <h3>{{ disease[0] }}: {{ disease[1] }}</h3>
+    {% endfor %}
+</body>
+</html>

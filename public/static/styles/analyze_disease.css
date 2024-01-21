@@ -1,0 +1,53 @@
+/* Disease Properties Form CSS */
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff5f5; /* Light red background */
+    color: #4a4a4a; /* Dark grey for text */
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    background-color: #ff6347; /* Tomato red */
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    margin: 0;
+    border-bottom: 5px solid #4a4a4a; /* Dark border for contrast */
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffeedd; /* Light tomato color */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #4a4a4a; /* Dark grey border */
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    background-color: #ff6347; /* Tomato red */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #dc143c; /* Darker red on hover */
+}

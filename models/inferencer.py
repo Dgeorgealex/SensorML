@@ -33,11 +33,12 @@ def make_inference(parameters):
     query_str = f"""
         PREFIX ex: <http://www.semanticweb.org/cezar/ontologies/2024/0/tomatoes#>
 
-        SELECT ?disease
+        SELECT ?disease ?description
         WHERE {{
             ?abnormalityGroup rdf:type ex:AbnormalityGroup ;
                                 {abnormalities}
-            ?disease ex:hasAbnormalityGroup ?abnormalityGroup .
+            ?disease ex:hasAbnormalityGroup ?abnormalityGroup ;
+                        ex:description ?description .
         }}
     """
 
@@ -49,5 +50,8 @@ def make_inference(parameters):
 
     results = []
     for row in g.query(query):
-        results.append(row['disease'].split('#')[1])
+        results.append((row['disease'].split('#')[1],row['description'].value))
     return set(results)
+
+
+print(make_inference({"intensity": "Strong"}))

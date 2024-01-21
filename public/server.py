@@ -8,6 +8,7 @@ from models.inferencer import make_inference
 app = Flask(__name__)
 
 script_directory = os.path.dirname(os.path.abspath(__file__))
+os.chdir(script_directory)
 relative_file_path = '../assets/dataset.csv'
 absolute_file_path = os.path.join(script_directory, relative_file_path)
 df = load_dataset(absolute_file_path)
@@ -84,20 +85,17 @@ def calendar_plot(column):
 
 @app.route('/disease_information')
 def show_disease():
-    columns = df.columns[1:]
-    return render_template('analyze_disease.html', columns=columns)
+    return render_template('analyze_disease.html')
 
 
 @app.route('/disease_information/disease', methods=['POST'])
 def find_disease():
-    columns = df.columns[1:]
     form_list = ["part", "intensity", "texture", "color", "pattern", "anatomicalRegion", "shape", "borderColor"]
     parameters = {}
     for element in form_list:
         if request.form[element]:
             parameters[element] = request.form[element]
-    print(make_inference(parameters))
-    return render_template('analyze_disease.html', columns=columns)
+    return render_template('diseases.html', diseases=make_inference(parameters))
 
 
 if __name__ == '__main__':

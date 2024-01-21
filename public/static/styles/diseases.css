@@ -1,0 +1,19 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff5f5; /* Light red background */
+    color: #4a4a4a; /* Dark grey for text */
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    background-color: #ff6347; /* Tomato red */
+    color: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-bottom: 2px solid #4a4a4a; /* Dark border for contrast */
+}
+
+h3 {
+    margin: 5px 0;
+}

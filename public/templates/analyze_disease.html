@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Properties Form</title>
+    <title>Disease Properties Form</title>
+    <link href="../static/styles/analyze_disease.css" rel="stylesheet">
 </head>
 <body>
 
-<h1>Image Properties Form</h1>
+<h1>Disease Properties Form</h1>
 
 <form action="/disease_information/disease" method="POST">
     <label for="part">Part:</label>
@@ -23,7 +24,6 @@
     <select id="intensity" name="intensity">
         <option value="" selected>Choose an intensity</option>
         <option value="WeakToModerate">WeakToModerate</option>
-        <option value="Strong">Strong</option>
         <option value="StrongToFatal">StrongToFatal</option>
         <option value="SevereToFatal">SevereToFatal</option>
         <option value="AllIntensities">AllIntensities</option>
