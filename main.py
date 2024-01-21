@@ -1,4 +1,5 @@
 from models.propheting import prophet_uni_variable
+from models.propheting import prophet_uni_regressor
 from data_processing.data_processing import load_dataset
 
 
@@ -11,7 +12,9 @@ def main():
 
     # show_calendar_plots(df)
 
-    prophet_uni_variable(df)
+    # prophet_uni_variable(df)
+
+    prophet_uni_regressor(df)
 
     # print_cross_validation(df)
 

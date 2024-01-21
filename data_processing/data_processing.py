@@ -12,6 +12,10 @@ def split_and_truncate(df, start_date, end_date):
     return truncated_dfs
 
 
+def truncate(df, start_date, end_date):
+    return df[(df['Timestamp'] >= start_date) & (df['Timestamp'] <= end_date)]
+
+
 def load_dataset(path):
     df = pd.read_csv(path)
     # print(df.head())
