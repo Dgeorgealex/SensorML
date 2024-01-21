@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Prophet Graph</title>
+    <link href="../static/styles/prophet_graph.css" rel="stylesheet">
 </head>
 <body>
 {% for column in columns %}
 <h2>Prophet Prediction of {{ column }}</h2>
 <img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date) }}"
      alt="Prophet Prediction of {{ column }}">
+{% endfor %}
+{% for disease in diseases %}
+<h2> {{ disease[1] }}: The tomato could suffer from {{ disease[0] }} </h2>
 {% endfor %}
 
 <!--<h1>Loading Graph...</h1>

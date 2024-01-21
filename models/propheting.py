@@ -43,6 +43,8 @@ def prophet_uni_regressor(df, start_date, end_date, directory=None):
 
     actual = split_and_truncate(df, end_date, end_date + pd.Timedelta(days=2))
 
+    result = {}
+
     for column in data.columns[1:]:
         model = Prophet()
 
@@ -60,4 +62,10 @@ def prophet_uni_regressor(df, start_date, end_date, directory=None):
 
         # print_column_forcast(forecast, column)
         file_path = os.path.join(directory, f'{column}.png')
+        if column == "temp1":
+            result['temperature'] = forecast['yhat'].tail(48)
+        if column == "umid":
+            result['humidity'] = forecast['yhat'].tail(48)
+            result['timestamp'] = forecast['ds'].tail(48)
         plot_forecast(forecast, actual, column, file_path)
+    return zip(result['temperature'], result['humidity'], result['timestamp'])
