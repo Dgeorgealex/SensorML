@@ -7,7 +7,7 @@
 <body>
 {% for column in columns %}
     <h2>Prediction vs Actual of {{ column }}</h2>
-    <img src="{{ url_for('lstm_page', column=column, date=date) }}" alt="Prediction vs Actual of {{ column }}">
+    <img src="{{ url_for('lstm_page_a', column=column, date=date) }}" alt="Prediction vs Actual of {{ column }}">
 {% endfor %}
 </body>
 </html>

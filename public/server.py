@@ -172,11 +172,11 @@ def lstm_prediction():
     lstm_predict(df, date, subdirectory)
 
     columns = df.columns[1:]
-    return render_template('lstm.html', columns=columns, date=date)
+    return render_template('lstm.html', columns=columns, date=date_string)
 
 
-@app.route('/lstm_page/<column>/<date>')
-def lstm_page_alex(column, date):
+@app.route('/lstm_page_a/<column>/<date>')
+def lstm_page_a(column, date):
     directory = os.path.join(script_directory, 'lstm_images')
     subdirectory = os.path.join(directory, date)
 
