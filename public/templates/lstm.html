@@ -9,5 +9,8 @@
     <h2>Prediction vs Actual of {{ column }}</h2>
     <img src="{{ url_for('lstm_page_a', column=column, date=date) }}" alt="Prediction vs Actual of {{ column }}">
 {% endfor %}
+{% for disease in diseases %}
+<h2> {{ disease[1] }}: The tomato could suffer from {{ disease[0] }} </h2>
+{% endfor %}
 </body>
 </html>

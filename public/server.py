@@ -131,7 +131,6 @@ def prophet_image():
             disease_threats.append(("Leaf Mold", date))
         if 22 <= int(temp) <= 30 and 50 <= int(humid) <= 75:
             disease_threats.append(("Powdery Mildew", date))
-    print(disease_threats)
     return render_template('prophet_graph.html', columns=df.columns[1:],
                            start_date=start_date_dir, end_date=end_date_dir, diseases=disease_threats)
 
@@ -196,10 +195,23 @@ def lstm_prediction():
     if not os.path.exists(subdirectory):
         os.makedirs(subdirectory)
 
-    lstm_predict(df, date, subdirectory)
+    result_data = lstm_predict(df, date, subdirectory)
+    disease_threats = []
+    for temp, humid, date in result_data:
+        print(temp, humid, date)
+        if 24 <= int(temp) <= 29 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Early Blight", date))
+        if 17 <= int(temp) <= 23 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Gray Mold", date))
+        if 10 <= int(temp) <= 24 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Late Blight", date))
+        if 21 <= int(temp) <= 24 and 85 <= int(humid) <= 100:
+            disease_threats.append(("Leaf Mold", date))
+        if 22 <= int(temp) <= 30 and 50 <= int(humid) <= 75:
+            disease_threats.append(("Powdery Mildew", date))
 
     columns = df.columns[1:]
-    return render_template('lstm.html', columns=columns, date=date_string)
+    return render_template('lstm.html', columns=columns, date=date_string, diseases=disease_threats)
 
 
 @app.route('/seq2seq_page_a/<column>/<date>')

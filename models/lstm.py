@@ -154,7 +154,7 @@ def lstm_predict(df, date, subdirectory):
         file_path = os.path.join(subdirectory, f'{feature_names[i]}')
         plt.savefig(file_path)
         plt.close()
-
+    return zip(predictions[:, 1], predictions[:, 2], range(1, 41))
 
 def plot_predictions(model, test_loader, scaler, feature_names, directory=None):
     model.eval()
