@@ -1,0 +1,69 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff5f5; /* Light red background, reminiscent of tomato flesh */
+    color: #4a4a4a; /* Dark grey for text */
+    margin: 0;
+    padding: 0;
+}
+
+.date-selector {
+    text-align: center;
+    margin-top: 20px; /* Added spacing at the top */
+}
+
+.button-container {
+    position: relative;
+    display: inline-block;
+    margin: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #ff6347; /* Tomato red for buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-right: 5px; /* Added spacing between buttons */
+}
+
+button:hover {
+    background-color: #dc143c; /* Darker red on hover */
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 160px; /* Set the width for the dropdown */
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    border-radius: 5px;
+}
+
+.narrow-dropdown {
+    width: 120px; /* Adjusted width for the narrower dropdown */
+}
+
+.dropdown button {
+    width: 100%;
+}
+
+#generate-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 10px;
+    background-color: #ff6347; /* Tomato red for Generate button */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#generate-btn:hover {
+    background-color: #dc143c; /* Darker red on hover */
+}
