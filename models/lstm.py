@@ -136,6 +136,9 @@ def lstm_predict(df, date, subdirectory):
     predictions = np.vstack(predictions).reshape(-1, len(feature_names))
     actuals = np.vstack(actuals).reshape(-1, len(feature_names))
 
+    predictions = scaler.inverse_transform(predictions)
+    actuals = scaler.inverse_transform(actuals)
+
     for i in range(predictions.shape[1]):
         plt.figure(figsize=(10, 4))
         actuals = actuals[:48]

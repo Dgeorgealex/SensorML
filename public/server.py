@@ -9,7 +9,7 @@ from data_processing.graphs import (show_correlation_matrix, show_variable_distr
                                     show_calendar_plots)
 from models.propheting import prophet_uni_regressor
 from models.lstm import show_lstm, lstm_predict
-from models.seq2seq import show_seq2seq
+from models.seq2seq import show_seq2seq, seq2seq_predict
 
 app = Flask(__name__)
 
@@ -153,6 +153,33 @@ def lstm_select():
     return render_template('lstm_date_selector.html')
 
 
+@app.route('/seq2seq-date-selector')
+def seq2se2_select():
+    return render_template('seq2seq_date_selector.html')
+
+
+@app.route('/generate-prediction-seq2seq')
+def seq2seq_prediction():
+    year = int(request.args.get('year'))
+    month = int(request.args.get('month'))
+    day = int(request.args.get('day'))
+
+    date = datetime(year, month, day)
+
+    date_string = date.strftime("'%Y%m%d")
+
+    directory = os.path.join(script_directory, 'seq2seq_images')
+    subdirectory = os.path.join(directory, date_string)
+
+    if not os.path.exists(subdirectory):
+        os.makedirs(subdirectory)
+
+    seq2seq_predict(df, date, subdirectory)
+
+    columns = df.columns[1:]
+    return render_template('seq2seq2.html', columns=columns, date=date_string)
+
+
 @app.route('/generate-prediction-lstm')
 def lstm_prediction():
     year = int(request.args.get('year'))
@@ -174,6 +201,16 @@ def lstm_prediction():
     columns = df.columns[1:]
     return render_template('lstm.html', columns=columns, date=date_string)
 
+
+@app.route('/seq2seq_page_a/<column>/<date>')
+def seq2seq_page_a(column, date):
+    directory = os.path.join(script_directory, 'seq2seq_images')
+    subdirectory = os.path.join(directory, date)
+
+    file_path = os.path.join(subdirectory, f'{column}.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    return "Image not found", 404
 
 @app.route('/lstm_page_a/<column>/<date>')
 def lstm_page_a(column, date):

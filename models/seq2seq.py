@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 
 from models.lstm import preprocess_data, create_datasets, plot_predictions
-
+import matplotlib.pyplot as plt
 
 class Seq2SeqModel(nn.Module):
     def __init__(self, input_size, hidden_layer_size, output_size, num_layers, sequence_length):
@@ -65,6 +65,55 @@ def train_model(model, train_loader, test_loader, num_epochs=50):
 
     torch.save(model.state_dict(), '../trained_models/seq2seq.pth')
     return model
+
+
+def seq2seq_predict(df, date, subdirectory):
+    model = Seq2SeqModel(input_size=13, hidden_layer_size=100, output_size=13, num_layers=2,
+                      sequence_length=48)
+    model.load_state_dict(torch.load('../trained_models/seq2seq.pth'))
+
+    X, y, scaler = preprocess_data(df, sequence_length=72, prediction_length=48)
+
+    condition = df['Timestamp'] == date
+
+    index_of_first_row = condition.idxmax() - 72
+    x_value = X[index_of_first_row]
+    y_value = y[index_of_first_row]
+
+    feature_names = df.columns.tolist()[1:]
+
+    model.eval()
+    predictions, actuals = [], []
+
+    with torch.no_grad():
+        x_value = torch.from_numpy(x_value).to(torch.float32)
+        y_pred = model(x_value.unsqueeze(0))
+        predictions = y_pred.cpu().numpy()
+
+    predictions = predictions[0]
+    actuals = y_value
+
+    predictions = np.vstack(predictions).reshape(-1, len(feature_names))
+    actuals = np.vstack(actuals).reshape(-1, len(feature_names))
+
+    predictions = scaler.inverse_transform(predictions)
+    actuals = scaler.inverse_transform(actuals)
+
+    for i in range(predictions.shape[1]):
+        plt.figure(figsize=(10, 4))
+        actuals = actuals[:48]
+        predictions = predictions[:48]
+
+        plt.plot(actuals[:, i], label='Actual')
+        plt.plot(predictions[:, i], label='Predicted')
+        plt.title(f'Feature: {feature_names[i]}')
+        plt.xlabel('Time')
+        plt.ylabel('Value')
+        plt.legend()
+
+        file_path = os.path.join(subdirectory, f'{feature_names[i]}')
+        plt.savefig(file_path)
+        plt.close()
 
 
 def show_seq2seq(df, directory=None, num_epochs=3):
