@@ -48,10 +48,6 @@ class LSTMModel(nn.Module):
 
     def forward(self, input_seq):
         lstm_out, _ = self.lstm(input_seq)
-        # predictions = self.linear(lstm_out)
-        # Reshape the predictions to match the target format
-        # predictions = predictions.reshape(-1, self.sequence_length, predictions.size(-1))
-        # predictions = self.linear(lstm_out[:, -1, :]) ##
         predictions = self.linear(lstm_out[:, -self.sequence_length:, :])
         return predictions
 

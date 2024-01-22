@@ -23,15 +23,16 @@ class Seq2SeqModel(nn.Module):
         _, (hidden_state, cell_state) = self.encoder_lstm(input_seq)
 
         # Prepare decoder input (initially zeros)
-        decoder_input = torch.zeros(input_seq.size(0), self.sequence_length, input_seq.size(2))
+        decoder_input = input_seq[:, -1, :].unsqueeze(1)
 
         # Decoder
         outputs = []
         for t in range(self.sequence_length):
             # At each time step, use hidden_state from the last step as the hidden state for the decoder
-            out, (hidden_state, cell_state) = self.decoder_lstm(decoder_input[:, [t], :], (hidden_state, cell_state))
+            out, (hidden_state, cell_state) = self.decoder_lstm(decoder_input, (hidden_state, cell_state))
             out = self.linear(out.squeeze(1))
             outputs.append(out.unsqueeze(1))
+            decoder_input = out.unsqueeze(1)
 
         outputs = torch.cat(outputs, dim=1)
         return outputs
