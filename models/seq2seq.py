@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -61,6 +63,7 @@ def train_model(model, train_loader, test_loader, num_epochs=50):
                 test_losses.append(test_loss.item())
         print(f'Epoch {epoch} Test Loss: {np.mean(test_losses)}')
 
+    torch.save(model.state_dict(), '../trained_models/seq2seq.pth')
     return model
 
 
@@ -73,7 +76,11 @@ def show_seq2seq(df, directory=None, num_epochs=3):
     # Initialize and train the model
     model = Seq2SeqModel(input_size=X.shape[2], hidden_layer_size=100, output_size=y.shape[2], num_layers=2,
                          sequence_length=48)
-    model = train_model(model, train_loader, test_loader, num_epochs)
+
+    if os.path.isfile('../trained_models/seq2seq.pth'):
+        model.load_state_dict(torch.load('../trained_models/seq2seq.pth'))
+    else:
+        model = train_model(model, train_loader, test_loader, num_epochs)
 
     feature_names = df.columns.tolist()[1:]
     plot_predictions(model, test_loader, scaler, feature_names, directory)

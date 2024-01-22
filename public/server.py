@@ -8,7 +8,7 @@ from models.inferencer import make_inference
 from data_processing.graphs import (show_correlation_matrix, show_variable_distributions,
                                     show_calendar_plots)
 from models.propheting import prophet_uni_regressor
-from models.lstm import show_lstm
+from models.lstm import show_lstm, lstm_predict
 from models.seq2seq import show_seq2seq
 
 app = Flask(__name__)
@@ -30,8 +30,8 @@ def main():
         os.makedirs(seq2seq_dir)
 
     # Train models, could save and just load them to build the images
-    show_lstm(df, lstm_dir, 3)
-    show_seq2seq(df, seq2seq_dir, 3)
+    show_lstm(df, lstm_dir, 10)
+    show_seq2seq(df, seq2seq_dir, 10)
     app.run(debug=False)
 
 
@@ -148,6 +148,43 @@ def prophet_images(column, start_date, end_date):
 
 
 # LSTM & SEQ2SEQ
+@app.route('/lstm-date-selector')
+def lstm_select():
+    return render_template('lstm_date_selector.html')
+
+
+@app.route('/generate-prediction-lstm')
+def lstm_prediction():
+    year = int(request.args.get('year'))
+    month = int(request.args.get('month'))
+    day = int(request.args.get('day'))
+
+    date = datetime(year, month, day)
+
+    date_string = date.strftime("'%Y%m%d")
+
+    directory = os.path.join(script_directory, 'lstm_images')
+    subdirectory = os.path.join(directory, date_string)
+
+    if not os.path.exists(subdirectory):
+        os.makedirs(subdirectory)
+
+    lstm_predict(df, date, subdirectory)
+
+    columns = df.columns[1:]
+    return render_template('lstm.html', columns=columns, date=date)
+
+
+@app.route('/lstm_page/<column>/<date>')
+def lstm_page_alex(column, date):
+    directory = os.path.join(script_directory, 'lstm_images')
+    subdirectory = os.path.join(directory, date)
+
+    file_path = os.path.join(subdirectory, f'{column}.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    return "Image not found", 404
+
 
 @app.route('/show_lstm')
 def lstm_page():

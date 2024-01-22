@@ -84,6 +84,7 @@ def train_model(model, train_loader, test_loader, num_epochs=50):
         #         test_losses.append(test_loss.item())
         # print(f'Epoch {epoch} Test Loss: {np.mean(test_losses)}')
 
+    torch.save(model.state_dict(), '../trained_models/lstm.pth')
     return model
 
 
@@ -96,10 +97,60 @@ def show_lstm(df, directory=None, num_epochs=3):
     # Initialize and train the model
     model = LSTMModel(input_size=X.shape[2], hidden_layer_size=100, output_size=y.shape[2], num_layers=2,
                       sequence_length=48)
-    model = train_model(model, train_loader, test_loader, num_epochs)
+
+    if os.path.isfile('../trained_models/lstm.pth'):
+        model.load_state_dict(torch.load('../trained_models/lstm.pth'))
+    else:
+        model = train_model(model, train_loader, test_loader, num_epochs)
 
     feature_names = df.columns.tolist()[1:]
     plot_predictions(model, test_loader, scaler, feature_names, directory)
+
+
+def lstm_predict(df, date, subdirectory):
+    model = LSTMModel(input_size=13, hidden_layer_size=100, output_size=13, num_layers=2,
+                      sequence_length=48)
+    model.load_state_dict(torch.load('../trained_models/lstm.pth'))
+
+    X, y, scaler = preprocess_data(df, sequence_length=72, prediction_length=48)
+
+    condition = df['Timestamp'] == date
+
+    index_of_first_row = condition.idxmax() - 72
+    x_value = X[index_of_first_row]
+    y_value = y[index_of_first_row]
+
+    feature_names = df.columns.tolist()[1:]
+
+    model.eval()
+    predictions, actuals = [], []
+
+    with torch.no_grad():
+        x_value = torch.from_numpy(x_value).to(torch.float32)
+        y_pred = model(x_value.unsqueeze(0))
+        predictions = y_pred.cpu().numpy()
+
+    predictions = predictions[0]
+    actuals = y_value
+
+    predictions = np.vstack(predictions).reshape(-1, len(feature_names))
+    actuals = np.vstack(actuals).reshape(-1, len(feature_names))
+
+    for i in range(predictions.shape[1]):
+        plt.figure(figsize=(10, 4))
+        actuals = actuals[:48]
+        predictions = predictions[:48]
+
+        plt.plot(actuals[:, i], label='Actual')
+        plt.plot(predictions[:, i], label='Predicted')
+        plt.title(f'Feature: {feature_names[i]}')
+        plt.xlabel('Time')
+        plt.ylabel('Value')
+        plt.legend()
+
+        file_path = os.path.join(subdirectory, f'{feature_names[i]}')
+        plt.savefig(file_path)
+        plt.close()
 
 
 def plot_predictions(model, test_loader, scaler, feature_names, directory=None):
