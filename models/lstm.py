@@ -1,4 +1,5 @@
-import pandas as pd
+import os.path
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -6,8 +7,6 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader, TensorDataset
 import matplotlib.pyplot as plt
-
-from data_processing.data_processing import load_dataset
 
 
 def preprocess_data(df, sequence_length, prediction_length):
@@ -80,38 +79,34 @@ def train_model(model, train_loader, test_loader, num_epochs=50):
             optimizer.step()
 
         # Evaluate on the test set
-        model.eval()
-        test_losses = []
-        with torch.no_grad():
-            for X_batch, y_batch in test_loader:
-                y_test_pred = model(X_batch)
-                test_loss = criterion(y_test_pred, y_batch)
-                test_losses.append(test_loss.item())
-        print(f'Epoch {epoch} Test Loss: {np.mean(test_losses)}')
+        # model.eval()
+        # test_losses = []
+        # with torch.no_grad():
+        #     for X_batch, y_batch in test_loader:
+        #         y_test_pred = model(X_batch)
+        #         test_loss = criterion(y_test_pred, y_batch)
+        #         test_losses.append(test_loss.item())
+        # print(f'Epoch {epoch} Test Loss: {np.mean(test_losses)}')
 
     return model
 
 
-def main():
-    df = load_dataset('../assets/SensorMLDataset.csv')
-
+def show_lstm(df, directory=None, num_epochs=3):
     X, y, scaler = preprocess_data(df, sequence_length=72, prediction_length=48)  # 72 hours for 3 days input
 
     # Create datasets
     train_loader, test_loader = create_datasets(X, y)
-    print(f'Input size is {X.shape[2]}')
-    print(f'Output size is {y.shape[2]}')
 
     # Initialize and train the model
     model = LSTMModel(input_size=X.shape[2], hidden_layer_size=100, output_size=y.shape[2], num_layers=2,
                       sequence_length=48)
-    model = train_model(model, train_loader, test_loader, 3)
+    model = train_model(model, train_loader, test_loader, num_epochs)
 
     feature_names = df.columns.tolist()[1:]
-    plot_predictions(model, test_loader, scaler, feature_names)
+    plot_predictions(model, test_loader, scaler, feature_names, directory)
 
 
-def plot_predictions(model, test_loader, scaler, feature_names):
+def plot_predictions(model, test_loader, scaler, feature_names, directory=None):
     model.eval()
     predictions, actuals = [], []
 
@@ -125,14 +120,11 @@ def plot_predictions(model, test_loader, scaler, feature_names):
     actuals = actuals[0]
 
     # Convert lists to numpy arrays
-    print(predictions)
-    # predictions = np.vstack(predictions)
-    # actuals = np.vstack(actuals)
     predictions = np.vstack(predictions).reshape(-1, len(feature_names))
     actuals = np.vstack(actuals).reshape(-1, len(feature_names))
 
-    print(f'Predictions shape is {predictions.shape}')
-    print(f'Actual shape is {actuals.shape}')
+    # print(f'Predictions shape is {predictions.shape}')
+    # print(f'Actual shape is {actuals.shape}')
 
     # Inverse transform the predictions and actuals
     predictions = scaler.inverse_transform(predictions)
@@ -152,8 +144,9 @@ def plot_predictions(model, test_loader, scaler, feature_names):
         plt.xlabel('Time')
         plt.ylabel('Value')
         plt.legend()
-        plt.show()
-
-
-if __name__ == '__main__':
-    main()
+        if directory:
+            file_path = os.path.join(directory, f'{feature_names[i]}')
+            plt.savefig(file_path)
+            plt.close()
+        else:
+            plt.show()

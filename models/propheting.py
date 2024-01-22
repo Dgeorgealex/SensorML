@@ -61,7 +61,8 @@ def prophet_uni_regressor(df, start_date, end_date, directory=None):
         forecast = model.predict(future)
 
         # print_column_forcast(forecast, column)
-        file_path = os.path.join(directory, f'{column}.png')
+
+        file_path = os.path.join(directory, f'{column}.png') if directory else None
         if column == "temp1":
             result['temperature'] = forecast['yhat'].tail(48)
         if column == "umid":

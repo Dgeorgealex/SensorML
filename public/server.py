@@ -8,6 +8,8 @@ from models.inferencer import make_inference
 from data_processing.graphs import (show_correlation_matrix, show_variable_distributions,
                                     show_calendar_plots)
 from models.propheting import prophet_uni_regressor
+from models.lstm import show_lstm
+from models.seq2seq import show_seq2seq
 
 app = Flask(__name__)
 
@@ -17,8 +19,19 @@ relative_file_path = '../assets/SensorMLDataset.csv'
 absolute_file_path = os.path.join(script_directory, relative_file_path)
 df = load_dataset(absolute_file_path)
 
+lstm_dir = 'lstm'
+seq2seq_dir = 'seq2seq'
+
 
 def main():
+    if not os.path.exists(lstm_dir):
+        os.makedirs(lstm_dir)
+    if not os.path.exists(seq2seq_dir):
+        os.makedirs(seq2seq_dir)
+
+    # Train models, could save and just load them to build the images
+    show_lstm(df, lstm_dir, 3)
+    show_seq2seq(df, seq2seq_dir, 3)
     app.run(debug=False)
 
 
@@ -132,6 +145,38 @@ def prophet_images(column, start_date, end_date):
     if os.path.exists(file_path):
         return send_file(file_path, mimetype='image/png')
     return "Image not found", 404
+
+
+# LSTM & SEQ2SEQ
+
+@app.route('/show_lstm')
+def lstm_page():
+    columns = df.columns[1:]
+    return render_template('lscm.html', columns=columns)
+
+
+@app.route('/lstm/<column>')
+def lstm(column):
+    file_path = os.path.join(lstm_dir, f'{column}.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    else:
+        return "Image not found", 404
+
+
+@app.route('/show_seq2seq')
+def seq2seq_page():
+    columns = df.columns[1:]
+    return render_template('seq2seq.html', columns=columns)
+
+
+@app.route('/seq2seq/<column>')
+def seq2seq(column):
+    file_path = os.path.join(seq2seq_dir, f'{column}.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    else:
+        return "Image not found", 404
 
 
 # DISEASE INFORMATION
