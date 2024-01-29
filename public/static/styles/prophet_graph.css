@@ -20,7 +20,17 @@ h2 {
 img {
     max-width: 100%;
     height: auto;
-    margin: 10px 0;
+    margin: 10px;
     border: 1px solid #ddd; /* Light grey border around images */
     border-radius: 5px;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center; /* Center items horizontally */
+    margin-bottom: 20px; /* Optional: Add space between image pairs */
+}
+
+.image-description {
+    text-align: center;
 }

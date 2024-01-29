@@ -12,10 +12,10 @@ mutex = Lock()  # Only generate one plot at a time
 # GRAPHS
 def show_correlation_matrix(df, file_path=None):
     with mutex:
-        if hasattr(show_correlation_matrix, 'is_generated') and file_path:
-            return
-        if file_path:
-            show_correlation_matrix.is_generated = True
+        # if hasattr(show_correlation_matrix, 'is_generated') and file_path:
+        #     return
+        # if file_path:
+        #     show_correlation_matrix.is_generated = True
 
         # d1 = df.groupby(df['Timestamp'].dt.date).median()
         # d2 = df.groupby(df['Timestamp'].dt.date).mean()

@@ -1,12 +1,13 @@
 const startSlider = document.getElementById("start-date");
 const endSlider = document.getElementById("end-date");
+const num_days = document.getElementById("num_days");
 const startValue = document.getElementById("start-value");
 const endValue = document.getElementById("end-value");
 
 // Start: 21.01.2022
 // End: 15.11.2023
 startDateLimit = "2022-01-21"
-endDateLimit = "2023-12-31"
+endDateLimit = "2022-10-31"
 
 const startDateRange = new Date(startDateLimit).getTime();
 const endDateRange = new Date(endDateLimit).getTime();
@@ -35,6 +36,7 @@ generateButton.addEventListener("click", () => {
     // Calculate the selected start and end dates
     const selectedStartDate = new Date(parseInt(startSlider.value)).toLocaleDateString();
     const selectedEndDate = new Date(parseInt(endSlider.value)).toLocaleDateString();
+    const numberOfDays = parseInt(num_days.value)
 
     console.log(`Selected Start Date: ${selectedStartDate}`);
     console.log(`Selected End Date: ${selectedEndDate}`);
@@ -45,5 +47,5 @@ generateButton.addEventListener("click", () => {
     preloader.style.display = 'flex';
     loaderImage.style.display = 'block';
 
-    window.location.href = `/generate-graph?start=${selectedStartDate}&end=${selectedEndDate}`;
+    window.location.href = `/generate-graph?start=${selectedStartDate}&end=${selectedEndDate}&num_days=${numberOfDays}`;
 });

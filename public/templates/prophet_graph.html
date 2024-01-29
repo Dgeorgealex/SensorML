@@ -6,10 +6,17 @@
     <link href="../static/styles/prophet_graph.css" rel="stylesheet">
 </head>
 <body>
+<h2>Correlation matrix</h2>
 {% for column in columns %}
 <h2>Prophet Prediction of {{ column }}</h2>
-<img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date) }}"
-     alt="Prophet Prediction of {{ column }}">
+<div class="image-container">
+    <img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date, regressor="no_regressors") }}"
+         alt="Prophet uni variable Prediction of {{ column }}">
+    <p class="image-description"> Prophet uni variable Prediction of {{ column }} </p>
+    <img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date, regressor="regressors") }}"
+         alt="Prophet with regressors Prediction of {{ column }}">
+    <p class="image-description"> Prophet Prediction with regressors of {{ column }} </p>
+</div>
 {% endfor %}
 {% for disease in diseases %}
 <h2> {{ disease[1] }}: The tomato could suffer from {{ disease[0] }} </h2>

@@ -1,10 +1,13 @@
 import os
 from datetime import datetime
 
+import pandas as pd
+
 from flask import Flask, send_file, render_template, request
 
 from main import load_dataset
 from models.inferencer import make_inference
+from data_processing.data_processing import truncate
 from data_processing.graphs import (show_correlation_matrix, show_variable_distributions,
                                     show_calendar_plots)
 from models.propheting import prophet_uni_regressor
@@ -108,7 +111,17 @@ def prophet_sliders():
 @app.route('/generate-graph')
 def prophet_image():
     start_date = request.args.get('start')
-    end_date = request.args.get('end')
+    num_days = int(request.args.get('num_days'))
+    end_date = pd.Timestamp(pd.Timestamp(start_date).to_pydatetime() + pd.Timedelta(days=num_days)).strftime('%-m/%-d/%Y')
+
+
+    truncated_df = truncate(df, start_date, end_date)
+    directory = 'img'
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+
+    file_path = os.path.join(directory, 'correlation_matrix.png')
+    show_correlation_matrix(truncated_df, file_path)
 
     start_date_dir = datetime.strptime(start_date, '%m/%d/%Y').strftime('%Y%m%d')
     end_date_dir = datetime.strptime(end_date, '%m/%d/%Y').strftime('%Y%m%d')
@@ -118,7 +131,8 @@ def prophet_image():
     if not os.path.exists(subdirectory):
         os.makedirs(subdirectory)
 
-    result_data = prophet_uni_regressor(df, start_date, end_date, subdirectory)
+    result_data = prophet_uni_regressor(df, start_date, num_days, subdirectory, regressors=True)
+    prophet_uni_regressor(df, start_date, num_days, subdirectory, regressors=False)
     disease_threats = []
     for temp, humid, date in result_data:
         if 24 <= int(temp) <= 29 and 90 <= int(humid) <= 100:
@@ -135,10 +149,10 @@ def prophet_image():
                            start_date=start_date_dir, end_date=end_date_dir, diseases=disease_threats)
 
 
-@app.route('/prophet_images/<column>/<start_date>/<end_date>')
-def prophet_images(column, start_date, end_date):
+@app.route('/prophet_images/<column>/<start_date>/<end_date>/<regressor>')
+def prophet_images(column, start_date, end_date, regressor):
     directory = os.path.join(script_directory, 'prophet_images')
-    subdirectory = os.path.join(directory, start_date + end_date)
+    subdirectory = os.path.join(directory, start_date + end_date, regressor)
 
     file_path = os.path.join(subdirectory, f'{column}.png')
     if os.path.exists(file_path):
