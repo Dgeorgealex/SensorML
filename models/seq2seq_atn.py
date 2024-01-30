@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from datetime import datetime
 
-
 LEARNING_RATE = 0.0001
 NUM_EPOCHS = 100
 
@@ -41,7 +40,7 @@ class Encoder(nn.Module):
 class Attention(nn.Module):
     def __init__(self, hidden_size):
         super().__init__()
-        self.attn = nn.Linear(2*hidden_size, hidden_size)
+        self.attn = nn.Linear(2 * hidden_size, hidden_size)
         self.v = nn.Linear(hidden_size, 1)
 
     def forward(self, curr_hidden, enc_outputs):
@@ -84,12 +83,12 @@ class DecoderWithAttention(nn.Module):
 
             curr_output = self.out(hidden).squeeze(0)
 
-            outputs[:, t:t+1, :] = curr_output.unsqueeze(1)
+            outputs[:, t:t + 1, :] = curr_output.unsqueeze(1)
 
             teacher_force = random.random() < teacher_force_prob if teacher_force_prob is not None else False
 
             if teacher_force:
-                curr_input = expected_outputs[:, t:t+1, :].squeeze(1)
+                curr_input = expected_outputs[:, t:t + 1, :].squeeze(1)
             else:
                 curr_input = curr_output
 
@@ -113,7 +112,8 @@ class Seq2Seq(nn.Module):
         # # dec_output_len = expected_outputs.shape[1]
         # dec_output_len = PREDICTION_LENGTH
 
-        outputs = self.decoder(inputs[:, -1, :], hidden, enc_outputs, dec_output_len, expected_outputs, teacher_force_prob)
+        outputs = self.decoder(inputs[:, -1, :], hidden, enc_outputs, dec_output_len, expected_outputs,
+                               teacher_force_prob)
 
         return outputs
 
@@ -123,7 +123,7 @@ def preprocess_train_data(df, sequence_length, prediction_length, scaler):
 
     x, y = [], []
     for i in range(len(df_scaled) - sequence_length - prediction_length):
-        x.append(df_scaled[i:i+sequence_length])
+        x.append(df_scaled[i:i + sequence_length])
         y.append(df_scaled[i + sequence_length:i + sequence_length + prediction_length])
 
     return np.array(x), np.array(y)
@@ -188,7 +188,6 @@ def get_trained_model_x_y(df, scaler, name=None, sequence_length=SEQUENCE_LENGTH
 
 # for testing without ui
 def test_model(model, x_values, y_values, scaler, feature_names):
-
     with torch.no_grad():
         x_value = torch.from_numpy(x_values).to(torch.float32)
         y_pred = model(x_value.unsqueeze(0))
@@ -249,6 +248,7 @@ if __name__ == "__main__":
 def ask_model_seq2seq_attention(df, name, date, sequence_length, prediction_length):
     scaler = fit_scaler(df)
 
+    # AICI PREPROCESS DATA IN LOC SA FACI PRE PROCESS IN get_trained_model_x_y
     model, x, y = get_trained_model_x_y(df, scaler, name, sequence_length, prediction_length)
 
     df['Timestamp'] = pd.to_datetime(df['Timestamp'])
@@ -273,15 +273,29 @@ def ask_model_seq2seq_attention(df, name, date, sequence_length, prediction_leng
     actual = np.vstack(actual).reshape(-1, len(feature_names))
 
     # here you save the photos
-    for i in range(prediction.shape[1]):
-        plt.figure(figsize=(10, 4))
-        plt.plot(actual[:, i], label='Actual')
-        plt.plot(prediction[:, i], label='Predicted')
-        plt.title(f'Feature: {feature_names[i]}')
-        plt.xlabel('Time')
-        plt.ylabel('Value')
-        plt.legend()
+    show = False
+    if show:
+        for i in range(prediction.shape[1]):
+            plt.figure(figsize=(10, 4))
+            plt.plot(actual[:, i], label='Actual')
+            plt.plot(prediction[:, i], label='Predicted')
+            plt.title(f'Feature: {feature_names[i]}')
+            plt.xlabel('Time')
+            plt.ylabel('Value')
+            plt.legend()
 
-        plt.show()
+            plt.show()
 
-    mse = np.mean((prediction - actual)**2)
+    timestamps = df.loc[index_of_first_row + 72: index_of_first_row + 72 + 47, 'Timestamp']
+
+    # Converting predictions and actuals to DataFrames
+    predictions_df = pd.DataFrame(data=prediction, columns=feature_names)
+    actuals_df = pd.DataFrame(data=actual, columns=feature_names)
+
+    # Attaching timestamps
+    predictions_df['Timestamp'] = timestamps.values
+    actuals_df['Timestamp'] = timestamps.values
+
+    return predictions_df, actuals_df
+
+    # mse = np.mean((prediction - actual) ** 2)

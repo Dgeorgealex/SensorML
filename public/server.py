@@ -28,6 +28,12 @@ seq2seq_dir = 'seq2seq'
 
 
 def main():
+    # pred, actual = lstm_predict(df, datetime(2022, 5, 10))
+    # print(pred)
+    # print()
+    # print(actual)
+    # exit(0)
+
     # for seq2seq Attention:
     # ask_model_seq2seq_attention(df, 'seq2seq25.pth', datetime(2022, 5, 10), 120, How much do you want depending on user preference (2, 5, 7) days)
 
@@ -52,9 +58,43 @@ def main():
         os.makedirs(seq2seq_dir)
 
     # Train models, could save and just load them to build the images
-    show_lstm(df, lstm_dir, 10)
-    show_seq2seq(df, seq2seq_dir, 10)
+    show_lstm(df, lstm_dir, 1)
+    # show_seq2seq(df, seq2seq_dir, 1)
     app.run(debug=False)
+
+
+@app.route('/lstm-date-selector')
+def lstm_select():
+    return render_template('lstm_date_selector.html')
+
+
+@app.route('/seq2seq_attention')
+def seq2seq_attention():
+    return render_template('seq2seq_attention.html')
+
+
+@app.route('/lstm_predict_route', methods=['POST'])
+def lstm_predict_route():
+    start_date = request.json.get('startDate')
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
+
+    predicted, actual = lstm_predict(df, start_date)
+    predicted = predicted.to_dict(orient='records')
+    actual = actual.to_dict(orient='records')
+    return jsonify(predicted, actual)
+
+
+@app.route('/seq2seq_predict_route', methods=['POST'])
+def seq2seq_predict_route():
+    start_date = request.json.get('startDate')
+    start_date = datetime.strptime(start_date, '%Y-%m-%d')
+
+    predicted, actual = ask_model_seq2seq_attention(df, 'seq2seq25.pth', start_date, 120, 2)
+
+    predicted = predicted.to_dict(orient='records')
+    actual = actual.to_dict(orient='records')
+
+    return jsonify(predicted, actual)
 
 
 @app.route('/')
@@ -151,7 +191,8 @@ def prophet_image():
     if not os.path.exists(subdirectory):
         os.makedirs(subdirectory)
 
-    result_data, regressors_errors = prophet_uni_regressor(df, start_date, end_date, num_days, subdirectory, regressors=True)
+    result_data, regressors_errors = prophet_uni_regressor(df, start_date, end_date, num_days, subdirectory,
+                                                           regressors=True)
     _, uni_errors = prophet_uni_regressor(df, start_date, end_date, num_days, subdirectory, regressors=False)
     disease_threats = []
     for temp, humid, date in result_data:
@@ -167,7 +208,7 @@ def prophet_image():
             disease_threats.append(("Powdery Mildew", date))
     return render_template('prophet_graph.html', columns=df.columns[1:],
                            start_date=start_date_dir, end_date=end_date_dir, diseases=disease_threats,
-                            regressors_errors=regressors_errors, uni_errors=uni_errors)
+                           regressors_errors=regressors_errors, uni_errors=uni_errors)
 
 
 @app.route('/prophet_images/<column>/<start_date>/<end_date>/<regressor>')
@@ -179,39 +220,6 @@ def prophet_images(column, start_date, end_date, regressor):
     if os.path.exists(file_path):
         return send_file(file_path, mimetype='image/png')
     return "Image not found", 404
-
-
-# LSTM & SEQ2SEQ
-@app.route('/lstm-date-selector')
-def lstm_select():
-    return render_template('lstm_date_selector.html')
-
-
-@app.route('/seq2seq-date-selector')
-def seq2se2_select():
-    return render_template('seq2seq_date_selector.html')
-
-
-@app.route('/generate-prediction-seq2seq')
-def seq2seq_prediction():
-    year = int(request.args.get('year'))
-    month = int(request.args.get('month'))
-    day = int(request.args.get('day'))
-
-    date = datetime(year, month, day)
-
-    date_string = date.strftime("'%Y%m%d")
-
-    directory = os.path.join(script_directory, 'seq2seq_images')
-    subdirectory = os.path.join(directory, date_string)
-
-    if not os.path.exists(subdirectory):
-        os.makedirs(subdirectory)
-
-    seq2seq_predict(df, date, subdirectory)
-
-    columns = df.columns[1:]
-    return render_template('seq2seq2.html', columns=columns, date=date_string)
 
 
 @app.route('/generate-prediction-lstm')
@@ -247,58 +255,6 @@ def lstm_prediction():
 
     columns = df.columns[1:]
     return render_template('lstm.html', columns=columns, date=date_string, diseases=disease_threats)
-
-
-@app.route('/seq2seq_page_a/<column>/<date>')
-def seq2seq_page_a(column, date):
-    directory = os.path.join(script_directory, 'seq2seq_images')
-    subdirectory = os.path.join(directory, date)
-
-    file_path = os.path.join(subdirectory, f'{column}.png')
-    if os.path.exists(file_path):
-        return send_file(file_path, mimetype='image/png')
-    return "Image not found", 404
-
-
-@app.route('/lstm_page_a/<column>/<date>')
-def lstm_page_a(column, date):
-    directory = os.path.join(script_directory, 'lstm_images')
-    subdirectory = os.path.join(directory, date)
-
-    file_path = os.path.join(subdirectory, f'{column}.png')
-    if os.path.exists(file_path):
-        return send_file(file_path, mimetype='image/png')
-    return "Image not found", 404
-
-
-@app.route('/show_lstm')
-def lstm_page():
-    columns = df.columns[1:]
-    return render_template('lscm.html', columns=columns)
-
-
-@app.route('/lstm/<column>')
-def lstm(column):
-    file_path = os.path.join(lstm_dir, f'{column}.png')
-    if os.path.exists(file_path):
-        return send_file(file_path, mimetype='image/png')
-    else:
-        return "Image not found", 404
-
-
-@app.route('/show_seq2seq')
-def seq2seq_page():
-    columns = df.columns[1:]
-    return render_template('seq2seq.html', columns=columns)
-
-
-@app.route('/seq2seq/<column>')
-def seq2seq(column):
-    file_path = os.path.join(seq2seq_dir, f'{column}.png')
-    if os.path.exists(file_path):
-        return send_file(file_path, mimetype='image/png')
-    else:
-        return "Image not found", 404
 
 
 # DISEASE INFORMATION
