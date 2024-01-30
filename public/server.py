@@ -3,7 +3,7 @@ from datetime import datetime
 
 import pandas as pd
 
-from flask import Flask, send_file, render_template, request
+from flask import Flask, send_file, render_template, request, jsonify
 
 from main import load_dataset
 from models.inferencer import make_inference
@@ -112,8 +112,8 @@ def prophet_sliders():
 def prophet_image():
     start_date = request.args.get('start')
     num_days = int(request.args.get('num_days'))
-    end_date = pd.Timestamp(pd.Timestamp(start_date).to_pydatetime() + pd.Timedelta(days=num_days)).strftime('%-m/%-d/%Y')
-
+    end_date = pd.Timestamp(pd.Timestamp(start_date).to_pydatetime() + pd.Timedelta(days=num_days)).strftime(
+        '%-m/%-d/%Y')
 
     truncated_df = truncate(df, start_date, end_date)
     directory = 'img'
@@ -238,6 +238,7 @@ def seq2seq_page_a(column, date):
         return send_file(file_path, mimetype='image/png')
     return "Image not found", 404
 
+
 @app.route('/lstm_page_a/<column>/<date>')
 def lstm_page_a(column, date):
     directory = os.path.join(script_directory, 'lstm_images')
@@ -295,6 +296,12 @@ def find_disease():
         if request.form[element]:
             parameters[element] = request.form[element]
     return render_template('diseases.html', diseases=make_inference(parameters))
+
+
+# GET ALL DATA (FOR NEW CHARTS)
+@app.route('/getdata')
+def get_add_data():
+    return jsonify(df.to_dict(orient='records'))
 
 
 if __name__ == '__main__':

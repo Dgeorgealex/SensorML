@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript" src="../static/charts/js/fusioncharts.js"></script>
+    <script type="text/javascript" src="../static/charts/js/themes/fusioncharts.theme.fusion.js"></script>
+    <script type="text/javascript" src="../static/js/var_distro.js"></script>
+
     <title>Variable Distributions</title>
     <link href="../static/styles/var_distro.css" rel="stylesheet">
 </head>
 <body>
-    {% for column in columns %}
-    <h2>Distribution and Boxplot of {{ column }}</h2>
-    <img src="{{ url_for('variable_distribution', column=column) }}" alt="Distribution of {{ column }}">
-    <br/>
-    {% endfor %}
+<div>
+    <label for="columnSelect">Select Column:</label>
+    <select id="columnSelect">
+    </select>
+
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate">
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate">
+
+    <button onclick="updateCharts()">Update Charts</button>
+</div>
+
+<div id="histogramChart"></div>
+<div id="boxplotChart"></div>
+
 </body>
 </html>
