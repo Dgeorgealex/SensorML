@@ -102,7 +102,7 @@ def show_seq2seq(df, directory=None, num_epochs=10, learning_size=168, predict_s
 
 #"""
 def seq2seq_predict(df, date, subdirectory, learning_size=336, predict_size=168):
-    model = Seq2SeqModel(input_size=13, output_size=13, hidden_layer_size=128, num_layers=2, sequence_length=predict_size)  # hidden_layer_size = 28, pentru 336->168, 100 in rest
+    model = Seq2SeqModel(input_size=13, output_size=13, hidden_layer_size=128, num_layers=2, sequence_length=predict_size)  # hidden_layer_size = 128, pentru 336->168, 100 in rest
     model.load_state_dict(torch.load(f'./trained_models/{learning_size}_seq2seq_{predict_size}.pth'))
 
     X, y, scaler = preprocess_data(df, sequence_length=learning_size, prediction_length=predict_size)
