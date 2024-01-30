@@ -13,6 +13,7 @@ from data_processing.graphs import (show_correlation_matrix, show_variable_distr
 from models.propheting import prophet_uni_regressor
 from models.lstm import show_lstm, lstm_predict
 from models.seq2seq import show_seq2seq, seq2seq_predict
+from models.seq2seq_atn import ask_model_seq2seq_attention
 
 app = Flask(__name__)
 
@@ -27,6 +28,7 @@ seq2seq_dir = 'seq2seq'
 
 
 def main():
+    ask_model_seq2seq_attention(df, 'seq2seq35.pth', datetime(2022, 5, 10), 200, 200)
     if not os.path.exists(lstm_dir):
         os.makedirs(lstm_dir)
     if not os.path.exists(seq2seq_dir):
