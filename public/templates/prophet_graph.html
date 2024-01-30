@@ -7,15 +7,23 @@
 </head>
 <body>
 <h2>Correlation matrix</h2>
+<img src="{{ url_for('correlation_matrix', start_date=start_date, end_date=end_date) }}"
+         alt="Correlation matrix for dates {{ start_date }} - {{ end_date }}">
 {% for column in columns %}
 <h2>Prophet Prediction of {{ column }}</h2>
 <div class="image-container">
-    <img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date, regressor="no_regressors") }}"
-         alt="Prophet uni variable Prediction of {{ column }}">
-    <p class="image-description"> Prophet uni variable Prediction of {{ column }} </p>
-    <img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date, regressor="regressors") }}"
-         alt="Prophet with regressors Prediction of {{ column }}">
-    <p class="image-description"> Prophet Prediction with regressors of {{ column }} </p>
+    <div>
+        <img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date, regressor="no_regressors") }}"
+             alt="Prophet uni variable prediction of {{ column }}">
+        <p class="image-description"> Prophet uni variable prediction of {{ column }} </p>
+        <p> Error = {{ uni_errors[column] }}</p>
+    </div>
+    <div>
+        <img src="{{ url_for('prophet_images', column=column, start_date=start_date, end_date=end_date, regressor="regressors") }}"
+             alt="Prophet with regressors prediction of {{ column }}">
+        <p class="image-description"> Prophet prediction with regressors of {{ column }} </p>
+        <p> Error = {{ regressors_errors[column] }}</p>
+    </div>
 </div>
 {% endfor %}
 {% for disease in diseases %}

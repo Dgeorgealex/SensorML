@@ -56,6 +56,16 @@ def correlation_matrix():
     return send_file(file_path, mimetype='image/png')
 
 
+@app.route('/correlation_matrix/<start_date>/<end_date>')
+def correlation_matrix_by_date(start_date, end_date):
+    start_date_dir = datetime.strptime(start_date, '%m/%d/%Y').strftime('%Y%m%d')
+    end_date_dir = datetime.strptime(end_date, '%m/%d/%Y').strftime('%Y%m%d')
+    directory = os.path.join(script_directory, 'prophet_images')
+    subdirectory = os.path.join(directory, start_date_dir + end_date_dir)
+    file_path = os.path.join(subdirectory, "correlation_matrix.png")
+    return send_file(file_path, mimetype='image/png')
+
+
 # DISTRIBUTIONS
 
 
@@ -111,17 +121,8 @@ def prophet_sliders():
 @app.route('/generate-graph')
 def prophet_image():
     start_date = request.args.get('start')
+    end_date = request.args.get('end')
     num_days = int(request.args.get('num_days'))
-    end_date = pd.Timestamp(pd.Timestamp(start_date).to_pydatetime() + pd.Timedelta(days=num_days)).strftime(
-        '%-m/%-d/%Y')
-
-    truncated_df = truncate(df, start_date, end_date)
-    directory = 'img'
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-
-    file_path = os.path.join(directory, 'correlation_matrix.png')
-    show_correlation_matrix(truncated_df, file_path)
 
     start_date_dir = datetime.strptime(start_date, '%m/%d/%Y').strftime('%Y%m%d')
     end_date_dir = datetime.strptime(end_date, '%m/%d/%Y').strftime('%Y%m%d')
@@ -131,8 +132,8 @@ def prophet_image():
     if not os.path.exists(subdirectory):
         os.makedirs(subdirectory)
 
-    result_data = prophet_uni_regressor(df, start_date, num_days, subdirectory, regressors=True)
-    prophet_uni_regressor(df, start_date, num_days, subdirectory, regressors=False)
+    result_data, regressors_errors = prophet_uni_regressor(df, start_date, end_date, num_days, subdirectory, regressors=True)
+    _, uni_errors = prophet_uni_regressor(df, start_date, end_date, num_days, subdirectory, regressors=False)
     disease_threats = []
     for temp, humid, date in result_data:
         if 24 <= int(temp) <= 29 and 90 <= int(humid) <= 100:
@@ -146,7 +147,8 @@ def prophet_image():
         if 22 <= int(temp) <= 30 and 50 <= int(humid) <= 75:
             disease_threats.append(("Powdery Mildew", date))
     return render_template('prophet_graph.html', columns=df.columns[1:],
-                           start_date=start_date_dir, end_date=end_date_dir, diseases=disease_threats)
+                           start_date=start_date_dir, end_date=end_date_dir, diseases=disease_threats,
+                            regressors_errors=regressors_errors, uni_errors=uni_errors)
 
 
 @app.route('/prophet_images/<column>/<start_date>/<end_date>/<regressor>')

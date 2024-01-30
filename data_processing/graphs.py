@@ -85,15 +85,15 @@ def show_variable_distributions(df, directory=None):
 
 
 # PROPHET FORECAST
-def plot_forecast(forecast, actual, column, file_path=None):
+def plot_forecast(forecast, actual, column, date_difference, file_path=None):
     col = actual[column].rename(columns={'Timestamp': 'ds', column: 'y'})
 
     with mutex:
         plt.figure(figsize=(10, 6))
 
         plt.plot(col['ds'], col['y'], label='Actual')
-        plt.plot(forecast['ds'].tail(48), forecast['yhat'].tail(48), label='Predicted')
-        plt.fill_between(forecast['ds'].tail(48), forecast['yhat_lower'].tail(48), forecast['yhat_upper'].tail(48),
+        plt.plot(forecast['ds'].tail(24 * date_difference), forecast['yhat'].tail(24 * date_difference), label='Predicted')
+        plt.fill_between(forecast['ds'].tail(24 * date_difference), forecast['yhat_lower'].tail(24 * date_difference), forecast['yhat_upper'].tail(24 * date_difference),
                          alpha=0.3)
         plt.title(f"Actual vs Predicted for {column}")
         plt.xlabel('Date')

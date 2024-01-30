@@ -12,6 +12,14 @@ def print_column_forcast(forecast, column):
     print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(48))
 
 
+def compute_error(forecast, actual, column):
+    error = 0
+    for target, output in zip(actual[column], forecast['yhat']):
+        error += (target - output) ** 2
+    error = error / len(actual)
+    return error
+
+
 def prophet_uni_variable(df, start_date, end_date):
     split_dfs = split_and_truncate(df, start_date, end_date)
 
@@ -31,13 +39,14 @@ def prophet_uni_variable(df, start_date, end_date):
         plot_forecast(forecast, actual, column)
 
 
-def prophet_uni_regressor(df, start_date, date_difference, directory=None, regressors=False):
+def prophet_uni_regressor(df, start_date, end_date, date_difference, directory=None, regressors=False):
     # start_date = df['Timestamp'].min()
     # end_date = start_date + pd.Timedelta(weeks=2)
     # If start_date is not a pd timestamp, make it one
+
     if not isinstance(start_date, pd.Timestamp):
         start_date = pd.Timestamp(start_date)
-    end_date = pd.Timestamp(start_date.to_pydatetime() + pd.Timedelta(days=date_difference))
+        end_date = pd.Timestamp(end_date)
 
     data = truncate(df, start_date, end_date)
     if regressors:
@@ -50,9 +59,10 @@ def prophet_uni_regressor(df, start_date, date_difference, directory=None, regre
         os.makedirs(subdirectory)
 
     corr_matrix = data.corr()
-    actual = split_and_truncate(df, start_date + pd.Timedelta(days=365), end_date + pd.Timedelta(days=365))
+    show_correlation_matrix(df, os.path.join(directory, "correlation_matrix"))
+    actual = split_and_truncate(df, end_date, end_date + pd.Timedelta(days=date_difference))
     result = {}
-
+    errors = {}
     for column in data.columns[1:]:
         model = Prophet()
 
@@ -63,7 +73,7 @@ def prophet_uni_regressor(df, start_date, date_difference, directory=None, regre
                     model.add_regressor(column2)
         model.fit(new_data)
 
-        future = model.make_future_dataframe(periods=365*24, freq='H')
+        future = model.make_future_dataframe(periods=date_difference * 24, freq='H')
         if regressors:
             for column2 in new_data.columns[1:]:
                 if column2 != column and column2 != 'y' and corr_matrix[column][column2] >= 0.9:
@@ -72,9 +82,10 @@ def prophet_uni_regressor(df, start_date, date_difference, directory=None, regre
 
         file_path = os.path.join(subdirectory, f'{column}.png') if directory else None
         if column == "temp1":
-            result['temperature'] = forecast['yhat'].tail(48)
+            result['temperature'] = forecast['yhat'].tail(date_difference * 24)
         if column == "umid":
-            result['humidity'] = forecast['yhat'].tail(48)
-            result['timestamp'] = forecast['ds'].tail(48)
-        plot_forecast(forecast, actual, column, file_path)
-    return zip(result['temperature'], result['humidity'], result['timestamp'])
+            result['humidity'] = forecast['yhat'].tail(date_difference * 24)
+            result['timestamp'] = forecast['ds'].tail(date_difference * 24)
+        plot_forecast(forecast, actual, column, date_difference, file_path)
+        errors[column] = round(compute_error(forecast.tail(date_difference * 24), actual[column].tail(date_difference * 24), column), 4)
+    return zip(result['temperature'], result['humidity'], result['timestamp']), errors

@@ -16,7 +16,7 @@ def main():
     # show_calendar_plots(df)
 
     start_date = df['Timestamp'].min() + pd.Timedelta(weeks=4)
-    end_date = start_date + pd.Timedelta(days=2)
+    end_date = start_date + pd.Timedelta(days=5)
 
     # prophet_uni_variable(df, start_date, end_date)
 
@@ -26,7 +26,8 @@ def main():
     if not os.path.exists(subdirectory):
         os.makedirs(subdirectory)
 
-    prophet_uni_regressor(df, start_date, 2, directory=subdirectory, regressors=False)
+    prophet_uni_regressor(df, start_date, end_date, 5, directory=subdirectory, regressors=False)
+    prophet_uni_regressor(df, start_date, end_date, 5, directory=subdirectory, regressors=True)
 
     # print_cross_validation(df)
 

@@ -9,3 +9,15 @@ button {
     cursor: pointer;
     font-size: 16px;
 }
+
+select {
+    display: block; /* Makes the select a block-level element */
+    margin: 20px auto; /* Centers the select horizontally with automatic margins */
+    padding: 10px 20px; /* Padding similar to the button */
+    border: none; /* Removes default select border */
+    border-radius: 5px; /* Adds border radius */
+    font-size: 16px; /* Font size similar to the button */
+    cursor: pointer; /* Changes cursor to pointer on hover */
+    background-color: #ffffff; /* White background */
+    color: #333333; /* Dark text color */
+}
