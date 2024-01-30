@@ -107,12 +107,11 @@ class Seq2Seq(nn.Module):
         self.opt = torch.optim.Adam(self.parameters(), LEARNING_RATE)
         self.loss_func = nn.MSELoss()
 
-    def forward(self, inputs, expected_outputs=None, teacher_force_prob=None):
+    def forward(self, inputs, dec_output_len=PREDICTION_LENGTH, expected_outputs=None, teacher_force_prob=None):
         enc_outputs, hidden = self.encoder(inputs)
 
-        # dec_output_len = expected_outputs.shape[1]
-
-        dec_output_len = PREDICTION_LENGTH
+        # # dec_output_len = expected_outputs.shape[1]
+        # dec_output_len = PREDICTION_LENGTH
 
         outputs = self.decoder(inputs[:, -1, :], hidden, enc_outputs, dec_output_len, expected_outputs, teacher_force_prob)
 
@@ -223,7 +222,7 @@ def main():
     df = pd.read_csv("../assets/SensorMLDataset.csv")
     scaler = fit_scaler(df)
 
-    model, x, y = get_trained_model_x_y(df, scaler, )
+    model, x, y = get_trained_model_x_y(df, scaler)
 
     df['Timestamp'] = pd.to_datetime(df['Timestamp'])
 
@@ -264,7 +263,7 @@ def ask_model_seq2seq_attention(df, name, date, sequence_length, prediction_leng
 
     with torch.no_grad():
         x_value = torch.from_numpy(x_values).to(torch.float32)
-        y_pred = model(x_value.unsqueeze(0))
+        y_pred = model(x_value.unsqueeze(0), prediction_length)
         prediction = y_pred.cpu().numpy()
 
     prediction = prediction[0]
