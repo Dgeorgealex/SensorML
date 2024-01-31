@@ -139,10 +139,12 @@ def lstm_predict(df, date, subdirectory):
     predictions = scaler.inverse_transform(predictions)
     actuals = scaler.inverse_transform(actuals)
 
+    mse_error = {}
     for i in range(predictions.shape[1]):
         plt.figure(figsize=(10, 4))
         actuals = actuals[:48]
         predictions = predictions[:48]
+        mse_error[feature_names[i]] = np.mean((predictions[:, i] - actuals[:, i])**2)
 
         plt.plot(actuals[:, i], label='Actual')
         plt.plot(predictions[:, i], label='Predicted')
@@ -154,7 +156,9 @@ def lstm_predict(df, date, subdirectory):
         file_path = os.path.join(subdirectory, f'{feature_names[i]}')
         plt.savefig(file_path)
         plt.close()
-    return zip(predictions[:, 1], predictions[:, 2], range(1, 41))
+
+    return zip(predictions[:, 1], predictions[:, 2], range(1, 41)), mse_error
+
 
 def plot_predictions(model, test_loader, scaler, feature_names, directory=None):
     model.eval()

@@ -101,9 +101,9 @@ def show_seq2seq(df, directory=None, num_epochs=10, learning_size=168, predict_s
 
 
 #"""
-def seq2seq_predict(df, date, subdirectory, learning_size=336, predict_size=168):
-    model = Seq2SeqModel(input_size=13, output_size=13, hidden_layer_size=128, num_layers=2, sequence_length=predict_size)  # hidden_layer_size = 128, pentru 336->168, 100 in rest
-    model.load_state_dict(torch.load(f'./trained_models/{learning_size}_seq2seq_{predict_size}.pth'))
+def seq2seq_predict(df, date, subdirectory, learning_size=336, predict_size=168, hidden_size=128):
+    model = Seq2SeqModel(input_size=13, output_size=13, hidden_layer_size=hidden_size, num_layers=2, sequence_length=predict_size)  # hidden_layer_size = 128, pentru 336->168, 100 in rest
+    model.load_state_dict(torch.load(f'../trained_models/{learning_size}_seq2seq_{predict_size}.pth'))
 
     X, y, scaler = preprocess_data(df, sequence_length=learning_size, prediction_length=predict_size)
 
@@ -132,6 +132,7 @@ def seq2seq_predict(df, date, subdirectory, learning_size=336, predict_size=168)
     predictions = scaler.inverse_transform(predictions)
     actuals = scaler.inverse_transform(actuals)
 
+    mse_error = {}
     for i in range(predictions.shape[1]):
         plt.figure(figsize=(10, 4))
         actuals = actuals[:predict_size]
@@ -147,4 +148,7 @@ def seq2seq_predict(df, date, subdirectory, learning_size=336, predict_size=168)
         file_path = os.path.join(subdirectory, f'{feature_names[i]}')
         plt.savefig(file_path)
         plt.close()
-#"""
+
+        mse_error[feature_names[i]] = np.mean((predictions[:, i] - actuals[:, i])**2)
+
+    return zip(predictions[:, 1], predictions[:, 2], range(1, 41)), mse_error

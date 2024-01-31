@@ -241,12 +241,11 @@ def main():
 if __name__ == "__main__":
     main()
 
-
 # function that will be called from user interface
 # df = dataframe
 # name = name of model
 # date = date from which the model will predict
-def ask_model_seq2seq_attention(df, name, date, sequence_length, prediction_length):
+def ask_model_seq2seq_attention(df, name, date, sequence_length, prediction_length, subdirectory):
     scaler = fit_scaler(df)
 
     model, x, y = get_trained_model_x_y(df, scaler, name, sequence_length, prediction_length)
@@ -272,6 +271,10 @@ def ask_model_seq2seq_attention(df, name, date, sequence_length, prediction_leng
     prediction = np.vstack(prediction).reshape(-1, len(feature_names))
     actual = np.vstack(actual).reshape(-1, len(feature_names))
 
+    prediction = scaler.inverse_transform(prediction)
+    actual = scaler.inverse_transform(actual)
+
+    mse_error = {}
     # here you save the photos
     for i in range(prediction.shape[1]):
         plt.figure(figsize=(10, 4))
@@ -282,6 +285,10 @@ def ask_model_seq2seq_attention(df, name, date, sequence_length, prediction_leng
         plt.ylabel('Value')
         plt.legend()
 
-        plt.show()
+        file_path = os.path.join(subdirectory, f'{feature_names[i]}')
+        plt.savefig(file_path)
+        plt.close()
 
-    mse = np.mean((prediction - actual)**2)
+        mse_error[feature_names[i]] = np.mean((prediction[:, i] - actual[:, i])**2)
+
+    return zip(prediction[:, 1], prediction[:, 2], range(1, 41)), mse_error
