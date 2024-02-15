@@ -28,73 +28,15 @@ seq2seq_dir = 'seq2seq'
 
 
 def main():
-    # pred, actual = lstm_predict(df, datetime(2022, 5, 10))
-    # print(pred)
-    # print()
-    # print(actual)
-    # exit(0)
-
-    # for seq2seq Attention:
-    # ask_model_seq2seq_attention(df, 'seq2seq25.pth', datetime(2022, 5, 10), 120, How much do you want depending on user preference (2, 5, 7) days)
-
-    # for seq2seq without attention:
-    # seq2seq predict (i hope) -
-    # predict size and learning size - cred ca trebuie sa le setezi ca modelele pe care le avem
-    # 74 - 48, 168-120, 336-168 (2, 5, 7) zile de predictie
-    # seq2seq_predict(df, date, subdirectory, learning_size, predict_size)
-
-    # for lstm:
-    # Stie doar 3 cu 2
-    # lstm_predict(df, date) - ca pana acum
-
-    # pentru toate ar fi frumos sa se afiseze eroarea undeva
-
-    # Ma rog la Dumnezeu sa nu fie nimic dubios, dar daca e ceva, imi zici
-    # pupici!
-
     if not os.path.exists(lstm_dir):
         os.makedirs(lstm_dir)
     if not os.path.exists(seq2seq_dir):
         os.makedirs(seq2seq_dir)
 
     # Train models, could save and just load them to build the images
-    show_lstm(df, lstm_dir, 1)
-    # show_seq2seq(df, seq2seq_dir, 1)
+    # show_lstm(df, lstm_dir, 0)
+    # show_seq2seq(df, seq2seq_dir, 0)
     app.run(debug=False)
-
-
-@app.route('/lstm-date-selector')
-def lstm_select():
-    return render_template('lstm_date_selector.html')
-
-
-@app.route('/seq2seq_attention')
-def seq2seq_attention():
-    return render_template('seq2seq_attention.html')
-
-
-@app.route('/lstm_predict_route', methods=['POST'])
-def lstm_predict_route():
-    start_date = request.json.get('startDate')
-    start_date = datetime.strptime(start_date, '%Y-%m-%d')
-
-    predicted, actual = lstm_predict(df, start_date)
-    predicted = predicted.to_dict(orient='records')
-    actual = actual.to_dict(orient='records')
-    return jsonify(predicted, actual)
-
-
-@app.route('/seq2seq_predict_route', methods=['POST'])
-def seq2seq_predict_route():
-    start_date = request.json.get('startDate')
-    start_date = datetime.strptime(start_date, '%Y-%m-%d')
-
-    predicted, actual = ask_model_seq2seq_attention(df, 'seq2seq25.pth', start_date, 120, 2)
-
-    predicted = predicted.to_dict(orient='records')
-    actual = actual.to_dict(orient='records')
-
-    return jsonify(predicted, actual)
 
 
 @app.route('/')
@@ -126,8 +68,6 @@ def correlation_matrix_by_date(start_date, end_date):
 
 
 # DISTRIBUTIONS
-
-
 @app.route('/show_distributions')
 def show_distributions():
     columns = df.columns[1:]
@@ -170,7 +110,149 @@ def calendar_plot(column):
         return "Image not found", 404
 
 
-# PROPHET PLOTS
+@app.route('/lstm-sliders')
+def lstm_sliders():
+    return render_template('lstm-sliders.html')
+
+
+@app.route('/seq2seq-sliders')
+def seq2seq_sliders():
+    return render_template('seq2seq-sliders.html')
+
+
+@app.route('/seq2seq-atn-sliders')
+def seq2seq_atn_sliders():
+    return render_template('seq2seq-atn-sliders.html')
+
+
+@app.route('/generate-graph-lstm')
+def lstm_graphs():
+    start_date = request.args.get('start')
+    start_date_dt = datetime.strptime(start_date, '%m/%d/%Y')
+
+    # Extract year, month, and day
+    year = start_date_dt.year
+    month = start_date_dt.month
+    day = start_date_dt.day
+
+    # Create a new datetime object
+    date = datetime(year, month, day)
+
+    subdirectory = os.path.join(script_directory, 'lstm_images')
+
+    if not os.path.exists(subdirectory):
+        os.makedirs(subdirectory)
+
+    result_data, mse_error = lstm_predict(df, date, subdirectory)
+    disease_threats = []
+    for temp, humid, date in result_data:
+        print(temp, humid, date)
+        if 24 <= int(temp) <= 29 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Early Blight", date))
+        if 17 <= int(temp) <= 23 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Gray Mold", date))
+        if 10 <= int(temp) <= 24 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Late Blight", date))
+        if 21 <= int(temp) <= 24 and 85 <= int(humid) <= 100:
+            disease_threats.append(("Leaf Mold", date))
+        if 22 <= int(temp) <= 30 and 50 <= int(humid) <= 75:
+            disease_threats.append(("Powdery Mildew", date))
+
+    columns = df.columns[1:]
+    return render_template('lstm.html', columns=columns, diseases=disease_threats, mse_error=mse_error)
+
+
+
+@app.route('/generate-graph-seq2seq')
+def seq2seq_graphs():
+    start_date = request.args.get('start')
+    days = int(request.args.get('num_days'))
+    start_date_dt = datetime.strptime(start_date, '%m/%d/%Y')
+
+    # Extract year, month, and day
+    year = start_date_dt.year
+    month = start_date_dt.month
+    day = start_date_dt.day
+
+    # Create a new datetime object
+    date = datetime(year, month, day)
+
+    subdirectory = os.path.join(script_directory, 'seq2seq_images')
+
+    if not os.path.exists(subdirectory):
+        os.makedirs(subdirectory)
+
+    if days == 2:
+        learning_size = 72
+        predict_size = 48
+        hidden_size = 100
+    elif days == 5:
+        learning_size = 168
+        predict_size = 120
+        hidden_size = 100
+    else:
+        learning_size = 336
+        predict_size = 168
+        hidden_size = 128
+
+    result_data, mse_error = seq2seq_predict(df, date, subdirectory, learning_size, predict_size, hidden_size)
+
+    disease_threats = []
+    for temp, humid, date in result_data:
+        print(temp, humid, date)
+        if 24 <= int(temp) <= 29 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Early Blight", date))
+        if 17 <= int(temp) <= 23 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Gray Mold", date))
+        if 10 <= int(temp) <= 24 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Late Blight", date))
+        if 21 <= int(temp) <= 24 and 85 <= int(humid) <= 100:
+            disease_threats.append(("Leaf Mold", date))
+        if 22 <= int(temp) <= 30 and 50 <= int(humid) <= 75:
+            disease_threats.append(("Powdery Mildew", date))
+
+    columns = df.columns[1:]
+    return render_template('seq2seq.html', columns=columns, diseases=disease_threats, mse_error=mse_error)
+
+
+@app.route('/generate-graph-seq2seq-atn')
+def seq2seq_atn_graphs():
+    start_date = request.args.get('start')
+    days = int(request.args.get('num_days'))
+    start_date_dt = datetime.strptime(start_date, '%m/%d/%Y')
+
+    # Extract year, month, and day
+    year = start_date_dt.year
+    month = start_date_dt.month
+    day = start_date_dt.day
+
+    # Create a new datetime object
+    date = datetime(year, month, day)
+
+    subdirectory = os.path.join(script_directory, 'seq2seq_atn_images')
+
+    if not os.path.exists(subdirectory):
+        os.makedirs(subdirectory)
+
+    result_data, mse_error = ask_model_seq2seq_attention(df, 'seq2seq210.pth',
+                                                         date, 120, days*24, subdirectory)
+    disease_threats = []
+    for temp, humid, date in result_data:
+        print(temp, humid, date)
+        if 24 <= int(temp) <= 29 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Early Blight", date))
+        if 17 <= int(temp) <= 23 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Gray Mold", date))
+        if 10 <= int(temp) <= 24 and 90 <= int(humid) <= 100:
+            disease_threats.append(("Late Blight", date))
+        if 21 <= int(temp) <= 24 and 85 <= int(humid) <= 100:
+            disease_threats.append(("Leaf Mold", date))
+        if 22 <= int(temp) <= 30 and 50 <= int(humid) <= 75:
+            disease_threats.append(("Powdery Mildew", date))
+
+    columns = df.columns[1:]
+    return render_template('seq2seq_atn.html', columns=columns, diseases=disease_threats, mse_error=mse_error)
+
 
 @app.route('/prophet-sliders')
 def prophet_sliders():
@@ -191,8 +273,7 @@ def prophet_image():
     if not os.path.exists(subdirectory):
         os.makedirs(subdirectory)
 
-    result_data, regressors_errors = prophet_uni_regressor(df, start_date, end_date, num_days, subdirectory,
-                                                           regressors=True)
+    result_data, regressors_errors = prophet_uni_regressor(df, start_date, end_date, num_days, subdirectory, regressors=True)
     _, uni_errors = prophet_uni_regressor(df, start_date, end_date, num_days, subdirectory, regressors=False)
     disease_threats = []
     for temp, humid, date in result_data:
@@ -208,7 +289,7 @@ def prophet_image():
             disease_threats.append(("Powdery Mildew", date))
     return render_template('prophet_graph.html', columns=df.columns[1:],
                            start_date=start_date_dir, end_date=end_date_dir, diseases=disease_threats,
-                           regressors_errors=regressors_errors, uni_errors=uni_errors)
+                            regressors_errors=regressors_errors, uni_errors=uni_errors)
 
 
 @app.route('/prophet_images/<column>/<start_date>/<end_date>/<regressor>')
@@ -222,44 +303,37 @@ def prophet_images(column, start_date, end_date, regressor):
     return "Image not found", 404
 
 
-@app.route('/generate-prediction-lstm')
-def lstm_prediction():
-    year = int(request.args.get('year'))
-    month = int(request.args.get('month'))
-    day = int(request.args.get('day'))
+@app.route('/lstm_good/<column>')
+def lstm_good(column):
+    subdirectory = os.path.join(script_directory, 'lstm_images')
 
-    date = datetime(year, month, day)
+    file_path = os.path.join(subdirectory, f'{column}.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    return "Image not found", 404
 
-    date_string = date.strftime("'%Y%m%d")
 
-    directory = os.path.join(script_directory, 'lstm_images')
-    subdirectory = os.path.join(directory, date_string)
+@app.route('/seq2seq_good/<column>')
+def seq2seq_good(column):
+    subdirectory = os.path.join(script_directory, 'seq2seq_images')
 
-    if not os.path.exists(subdirectory):
-        os.makedirs(subdirectory)
+    file_path = os.path.join(subdirectory, f'{column}.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    return "Image not found", 404
 
-    result_data = lstm_predict(df, date, subdirectory)
-    disease_threats = []
-    for temp, humid, date in result_data:
-        print(temp, humid, date)
-        if 24 <= int(temp) <= 29 and 90 <= int(humid) <= 100:
-            disease_threats.append(("Early Blight", date))
-        if 17 <= int(temp) <= 23 and 90 <= int(humid) <= 100:
-            disease_threats.append(("Gray Mold", date))
-        if 10 <= int(temp) <= 24 and 90 <= int(humid) <= 100:
-            disease_threats.append(("Late Blight", date))
-        if 21 <= int(temp) <= 24 and 85 <= int(humid) <= 100:
-            disease_threats.append(("Leaf Mold", date))
-        if 22 <= int(temp) <= 30 and 50 <= int(humid) <= 75:
-            disease_threats.append(("Powdery Mildew", date))
 
-    columns = df.columns[1:]
-    return render_template('lstm.html', columns=columns, date=date_string, diseases=disease_threats)
+@app.route('/seq2seq_atn_good/<column>')
+def seq2seq_atn_good(column):
+    subdirectory = os.path.join(script_directory, 'seq2seq_atn_images')
+
+    file_path = os.path.join(subdirectory, f'{column}.png')
+    if os.path.exists(file_path):
+        return send_file(file_path, mimetype='image/png')
+    return "Image not found", 404
 
 
 # DISEASE INFORMATION
-
-
 @app.route('/disease_information')
 def show_disease():
     return render_template('analyze_disease.html')

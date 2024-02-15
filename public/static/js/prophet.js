@@ -7,7 +7,7 @@ const endValue = document.getElementById("end-value");
 // Start: 21.01.2022
 // End: 15.11.2023
 startDateLimit = "2022-01-21"
-endDateLimit = "2022-10-31"
+endDateLimit = "2023-11-15"
 
 const startDateRange = new Date(startDateLimit).getTime();
 const endDateRange = new Date(endDateLimit).getTime();

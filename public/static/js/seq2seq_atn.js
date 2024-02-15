@@ -14,14 +14,15 @@ const endDateRange = new Date(endDateLimit).getTime();
 startSlider.min = startDateRange;
 startSlider.max = endDateRange;
 
+
 // Initialize the displayed values with the default slider values
 startValue.textContent = new Date(parseInt(startSlider.value)).toLocaleDateString();
+
 
 // Add event listeners to update the displayed values when sliders are adjusted
 startSlider.addEventListener("input", () => {
     startValue.textContent = new Date(parseInt(startSlider.value)).toLocaleDateString();
 });
-
 
 const generateButton = document.getElementById("generate");
 generateButton.addEventListener("click", () => {
@@ -37,5 +38,5 @@ generateButton.addEventListener("click", () => {
     preloader.style.display = 'flex';
     loaderImage.style.display = 'block';
 
-    window.location.href = `/generate-graph-seq2seq?start=${selectedStartDate}&num_days=${numberOfDays}`;
+    window.location.href = `/generate-graph-seq2seq-atn?start=${selectedStartDate}&num_days=${numberOfDays}`;
 });

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Date Range Selector</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/prophet_slides.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/preloader.css') }}">
+</head>
+<body>
+<div id="preloader">
+    <iframe src="https://giphy.com/embed/4bjIKBOWUnVPICCzJc"
+            width="480" height="360" frameBorder="0" class="loader" allowFullScreen></iframe>
+</div>
+<div>
+    <label for="start-date">Start Date:</label>
+    <input type="range" id="start-date" name="start-date">
+    <span id="start-value">0</span>
+</div>
+<div>
+    <label for="num_days">Select Days to predict:</label>
+    <select id="num_days" name="num_days">
+        <option value="2">2 Days</option>
+        <option value="5">5 Days</option>
+        <option value="7">7 Days</option>
+    </select>
+</div>
+<button id="generate">Generate</button>
+
+<script src="../static/js/seq2seq.js"></script>
+</body>
+</html>

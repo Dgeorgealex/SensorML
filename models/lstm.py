@@ -7,7 +7,6 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from torch.utils.data import DataLoader, TensorDataset
 import matplotlib.pyplot as plt
-import pandas as pd
 
 
 def preprocess_data(df, sequence_length, prediction_length):
@@ -108,7 +107,7 @@ def show_lstm(df, directory=None, num_epochs=3):
     plot_predictions(model, test_loader, scaler, feature_names, directory)
 
 
-def lstm_predict(df, date, subdirectory='', show=False):
+def lstm_predict(df, date, subdirectory):
     model = LSTMModel(input_size=13, hidden_layer_size=100, output_size=13, num_layers=2,
                       sequence_length=48)
     model.load_state_dict(torch.load('../trained_models/lstm.pth'))
@@ -140,34 +139,25 @@ def lstm_predict(df, date, subdirectory='', show=False):
     predictions = scaler.inverse_transform(predictions)
     actuals = scaler.inverse_transform(actuals)
 
-    if show:
-        for i in range(predictions.shape[1]):
-            plt.figure(figsize=(10, 4))
-            actuals = actuals[:48]
-            predictions = predictions[:48]
+    mse_error = {}
+    for i in range(predictions.shape[1]):
+        plt.figure(figsize=(10, 4))
+        actuals = actuals[:48]
+        predictions = predictions[:48]
+        mse_error[feature_names[i]] = np.mean((predictions[:, i] - actuals[:, i])**2)
 
-            plt.plot(actuals[:, i], label='Actual')
-            plt.plot(predictions[:, i], label='Predicted')
-            plt.title(f'Feature: {feature_names[i]}')
-            plt.xlabel('Time')
-            plt.ylabel('Value')
-            plt.legend()
+        plt.plot(actuals[:, i], label='Actual')
+        plt.plot(predictions[:, i], label='Predicted')
+        plt.title(f'Feature: {feature_names[i]}')
+        plt.xlabel('Time')
+        plt.ylabel('Value')
+        plt.legend()
 
-            # file_path = os.path.join(subdirectory, f'{feature_names[i]}')
-            plt.show()
-            # plt.close()
-    timestamps = df.loc[index_of_first_row + 72:index_of_first_row + 72 + 47, 'Timestamp']
+        file_path = os.path.join(subdirectory, f'{feature_names[i]}')
+        plt.savefig(file_path)
+        plt.close()
 
-    # Converting predictions and actuals to DataFrames
-    predictions_df = pd.DataFrame(data=predictions, columns=feature_names)
-    actuals_df = pd.DataFrame(data=actuals, columns=feature_names)
-
-    # Attaching timestamps
-    predictions_df['Timestamp'] = timestamps.values
-    actuals_df['Timestamp'] = timestamps.values
-
-    return predictions_df[:48], actuals_df[:48]
-    # return zip(predictions[:, 1], predictions[:, 2], range(1, 41))
+    return zip(predictions[:, 1], predictions[:, 2], range(1, 41)), mse_error
 
 
 def plot_predictions(model, test_loader, scaler, feature_names, directory=None):

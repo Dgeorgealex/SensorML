@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LSTM</title>
+    <link href="../static/styles/calendar_plots.css" rel="stylesheet">
+</head>
+<body>
+{% for column in columns %}
+    <h2>Prediction vs Actual of {{ column }}</h2>
+    <img src="{{ url_for('lstm_good', column=column) }}" alt="Prediction vs Actual of {{ column }}">
+    <p> Error = {{ mse_error[column] }}</p>
+{% endfor %}
+{% for disease in diseases %}
+<h2> {{ disease[1] }}: The tomato could suffer from {{ disease[0] }} </h2>
+{% endfor %}
+</body>
+</html>
