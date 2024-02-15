@@ -28,24 +28,6 @@ seq2seq_dir = 'seq2seq'
 
 
 def main():
-    # for seq2seq Attention:
-    # ask_model_seq2seq_attention(df, 'seq2seq25.pth', datetime(2022, 5, 10), 120, How much do you want depending on user preference (2, 5, 7) days)
-
-    # for seq2seq without attention:
-    # seq2seq predict (i hope) -
-    # predict size and learning size - cred ca trebuie sa le setezi ca modelele pe care le avem
-    # 74 - 48, 168-120, 336-168 (2, 5, 7) zile de predictie
-    # seq2seq_predict(df, date, subdirectory, learning_size, predict_size)
-
-    # for lstm:
-    # Stie doar 3 cu 2
-    # lstm_predict(df, date) - ca pana acum
-
-    # pentru toate ar fi frumos sa se afiseze eroarea undeva
-
-    # Ma rog la Dumnezeu sa nu fie nimic dubios, dar daca e ceva, imi zici
-    # pupici!
-
     if not os.path.exists(lstm_dir):
         os.makedirs(lstm_dir)
     if not os.path.exists(seq2seq_dir):
